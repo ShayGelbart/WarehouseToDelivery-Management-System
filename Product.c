@@ -43,7 +43,7 @@ void printManufacturerByType(Manufacturer** manArray, eProductType productType)
 
 }
 
-void printProduct(Product* pProduct)
+void printProduct(const Product* pProduct)
 {
 	printf("Name of product: %s\nType of product: %s\tManufacturer: %s\t", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
 }
