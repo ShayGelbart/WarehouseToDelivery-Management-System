@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "DeliveryCompany.h"
 #include "DeliveryPerson.h"
 #include "General.h"
@@ -8,7 +9,7 @@ void initDeliveryCompany(DeliveryCompany* delComp)
 	delComp->name = getStrExactName("Enter Name:\n");
 	delComp->delPerArray = NULL;
 	delComp->deliveryPersonCount = 0;
-	//delComp->region = getRegion();
+	delComp->region = getRegion();
 }
 
 int	addDeliveryPerson(DeliveryCompany* delComp)
@@ -16,14 +17,39 @@ int	addDeliveryPerson(DeliveryCompany* delComp)
 	return 1;
 }
 
-int	removeDeliveryPerson(DeliveryCompany* deComp, DeliveryPerson* pDelPer)
+int findDeliveryPersonInArr(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer)
 {
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+	{
+		if (compareTwoDeliveryPerson(pDelComp->delPerArray[i], pDelPer) == 0)
+			return i;
+	}
+	return -1;
+}
+
+int	fireDeliveryPerson(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer)
+{
+	int index = findDeliveryPersonInArr(pDelComp, pDelPer);
+	pDelComp->delPerArray[index] = NULL;
+	for (int i = index; i < (pDelComp->deliveryPersonCount - index - 1); i++)
+	{
+		pDelComp->delPerArray[i] = pDelComp->delPerArray[i + 1];
+	}
+	DeliveryPerson** newDelPerArray = (DeliveryPerson**)realloc(pDelComp->delPerArray, (pDelComp->deliveryPersonCount - 1) * sizeof(DeliveryPerson*));
+	if (!newDelPerArray)
+	{
+		free(pDelComp->delPerArray);
+		return 0;
+	}
+
+	pDelComp->delPerArray = newDelPerArray;
+	pDelComp->deliveryPersonCount--;
 	return 1;
 }
 
-int	compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson p2)
+int	compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson* p2)
 {
-	return 1;
+	return (p1->id - p2->id);
 }
 
 //void assignDeliveryPersonToDelivery(DeliveryCompany* pDelPer, Delivery* pDelivery)
@@ -48,5 +74,6 @@ void printDeliveryPersonArrayWithIndex(DeliveryCompany* pDelComp)
 }
 void printDeliveryCompany(DeliveryCompany* pDelComp)
 {
-
+	printf("In company: %s located in %s there are %d delivery persons:\n", pDelComp->name, regionTypeStr[pDelComp->region], pDelComp->deliveryPersonCount);
+	printDeliveryPersonArrayWithIndex(pDelComp);
 }

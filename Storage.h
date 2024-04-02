@@ -3,10 +3,12 @@
 #define __STORAGE__
 
 #include "Product.h"
+#include "DeliveryCompany.h"
 
 typedef struct
 {
 	int deleteLater;
+	DeliveryCompany* DeliveryCompanyArr; // array
 }Storage;
 
 int compareManufacturersById(Storage* pStorage, Manufacturer* pMan);

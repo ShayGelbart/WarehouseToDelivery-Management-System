@@ -13,7 +13,7 @@ static const char* productTypeStr[eNofProductTypes]
 
 typedef struct
 {
-	Manufacturer* manufacturer;
+	Manufacturer manufacturer;
 	eProductType productType;
 	char* nameOfProduct;
 }Product;

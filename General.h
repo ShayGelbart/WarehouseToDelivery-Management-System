@@ -9,6 +9,7 @@ char* getStrExactName(const char* msg);
 char* myGets(char* buffer, int size);
 char* getDynStr(char* str);
 char** splitCharsToWords(char* str, int* pCount, int* pTotalLength);
+int generateRandom(int upperBorder, int lowerBorder);
 
 
 

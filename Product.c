@@ -17,12 +17,12 @@ void initProduct(Product* pProduct, Manufacturer** manArray)
 		printf("Pick a manufacturer\n");
 		int manIndex;
 		scanf("%d", &manIndex);
-		pProduct->manufacturer = manArray[manIndex - 1];
+		pProduct->manufacturer = *manArray[manIndex - 1];
 	}
 	else
-		initManufacturer(pProduct->manufacturer , manArray);
+		initManufacturer(&pProduct->manufacturer , manArray);
 
-	pProduct->nameOfProduct = getStrExactName("Enter the name of your product");
+	pProduct->nameOfProduct = getStrExactName("Enter the name of your product\n");
 }
 
 eProductType getTypeProduct()
@@ -45,7 +45,7 @@ void printManufacturerByType(Manufacturer** manArray, eProductType productType)
 
 void printProduct(Product* pProduct)
 {
-	printf("Name of product: %s\nType of product: %s\tManufacturer: %s\t", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer->name);
+	printf("Name of product: %s\nType of product: %s\tManufacturer: %s\t", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
 }
 
 int compareProducts(Product* p1, Product* p2)

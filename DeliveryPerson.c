@@ -10,10 +10,9 @@ void initDeliveryPerson(DeliveryPerson* pDelPer)
 	pDelPer->averageRating = 0;
 	pDelPer->numOfDeliveries = 0;
 
-	int range = UPPER_BORDER - LOWER_BORDER + 1;
 	srand((unsigned) time(NULL));
-
-	pDelPer->deliveryTime = (rand() % range) + LOWER_BORDER;
+	pDelPer->deliveryTime = generateRandom(UPPER_BORDER_TIME , LOWER_BORDER_TIME);
+	pDelPer->id = generateRandom(UPPER_BORDER_ID, LOWER_BORDER_ID);
 }
 
 int changeRating(DeliveryPerson* pDelPer, int rating)
@@ -41,5 +40,5 @@ int calcAverageRating(DeliveryPerson* pDelPer)
 void printDeliveryPerson(DeliveryPerson* pDelPer)
 {
 	printPerson(pDelPer->person);
-	printf("Number of successful deliveries: %d\tAverage rating by %d customers: %d\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->deliveryTime);
+	printf("Number of successful deliveries: %d\tAverage rating by %d customers: %lf\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->deliveryTime);
 }

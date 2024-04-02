@@ -75,3 +75,7 @@ char** splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 	return wordsArray;
 }
 
+int generateRandom(int upperBorder, int lowerBorder)
+{
+	return ((rand() % (upperBorder - lowerBorder + 1)) + lowerBorder);
+}

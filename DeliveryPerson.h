@@ -4,16 +4,20 @@
 
 #include "Person.h"
 
-#define UPPER_BORDER 72
-#define LOWER_BORDER 12
+#define UPPER_BORDER_TIME 72
+#define LOWER_BORDER_TIME 12
+
+#define UPPER_BORDER_ID 1
+#define LOWER_BORDER_ID 9999
 
 typedef struct
 {
 	Person* person;
 	int* ratingArr;
 	int numOfDeliveries;
-	int averageRating;
+	double averageRating;
 	int deliveryTime;
+	int id;
 }DeliveryPerson;
 
 void initDeliveryPerson(DeliveryPerson* pDelPer);
