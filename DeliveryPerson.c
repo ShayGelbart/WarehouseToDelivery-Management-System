@@ -16,7 +16,7 @@ void initDeliveryPerson(DeliveryPerson* pDelPer)
 	pDelPer->deliveryTime = (rand() % range) + LOWER_BORDER;
 }
 
-int changeRating(DeliveryPerson* pDelPer, int rating)
+int changeRating(DeliveryPerson* pDelPer, double rating)
 {
 	if (!addRatingToArray(pDelPer, rating))
 		return 0;
@@ -24,7 +24,7 @@ int changeRating(DeliveryPerson* pDelPer, int rating)
 	return 1;
 }
 
-int addRatingToArray(DeliveryPerson* pDelPer, int rating)
+int addRatingToArray(DeliveryPerson* pDelPer, double rating)
 {
 	return 0;
 }
