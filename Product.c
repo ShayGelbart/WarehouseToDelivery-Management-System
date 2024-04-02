@@ -48,7 +48,7 @@ void printProduct(Product* pProduct)
 	printf("Name of product: %s\nType of product: %s\tManufacturer: %s\t", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
 }
 
-int compareProducts(Product* p1, Product* p2)
+int compareProducts(const Product* p1, const Product* p2)
 {
 	
 	return strcmp(p1->nameOfProduct,p2->nameOfProduct);

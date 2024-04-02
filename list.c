@@ -128,6 +128,7 @@ BOOL L_delete(NODE* pNode, void(*freeKey)(void*))
 const NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*))
 {
 	const NODE* temp = NULL;
+	const NODE* returnValue = NULL;
 	while (pNode != NULL)
 	{
 		if (compare(pNode->key, Value) == 0)
@@ -135,9 +136,10 @@ const NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const voi
 			temp = pNode;
 			break;
 		}
+		returnValue = pNode;
 		pNode = pNode->next;
 	}
-	return temp;
+	return returnValue;
 }
 
 
