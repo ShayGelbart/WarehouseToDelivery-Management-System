@@ -69,6 +69,7 @@ void printDelivery(Delivery* pDelivery)
 	printf("Number of products %d" , pDelivery->numberOfProducts);
 	L_print(pDelivery->products, printProduct);
 	printDate(&pDelivery->deliveryDate);
-	printDeliveryCompany(pDelivery->deliveryCompany);
+	printf("Delivery Company Name: %s \n", pDelivery->deliveryCompany->name);
+	printf("Delivery Person: \t ");
 	printDeliveryPerson(pDelivery->deliveryPerson);
 }
