@@ -4,13 +4,25 @@
 
 #include "Product.h"
 #include "DeliveryCompany.h"
+#include "Delivery.h"
 
 typedef struct
 {
-	int deleteLater;
-	DeliveryCompany* DeliveryCompanyArr; // array
+	Product** productArr;
+	int numOfProducts;
+	DeliveryCompany* deliveryCompanyArr; // array
+	int numOfDeliveryComp;
+	Delivery** deliveryArr;
+	int numOfDeliveries;
+	Manufacturer** manArray;
+	int numOfManufacturers;
 }Storage;
 
+void initStorage(Storage* pStorage);
+int addProductToStorage(Storage* pStorage);
+int addDeliveryCompany(Storage* pStorage);
+int addDelivery(Storage* pStorage);
+int addManufcturer(Storage* pStorage);
 int compareManufacturersById(Storage* pStorage, Manufacturer* pMan);
 
 #endif // !__STORAGE__

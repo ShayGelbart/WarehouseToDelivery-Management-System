@@ -12,8 +12,22 @@ void initDeliveryCompany(DeliveryCompany* delComp)
 	delComp->region = getRegion();
 }
 
-int	addDeliveryPerson(DeliveryCompany* delComp)
+int	addDeliveryPerson(DeliveryCompany* pDelComp)
 {
+	DeliveryPerson* newPer = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+	if (!newPer)
+		return 0;
+	DeliveryPerson** temp = (DeliveryPerson**)realloc(pDelComp->delPerArray, (pDelComp->deliveryPersonCount + 1) * sizeof(DeliveryPerson*));
+	if (!temp)
+	{
+		free(newPer);
+		return 0;
+	}
+
+	pDelComp->delPerArray = temp;
+	initDeliveryPerson(newPer);
+	pDelComp->delPerArray[pDelComp->deliveryPersonCount] = newPer;
+	pDelComp->deliveryPersonCount++;
 	return 1;
 }
 
@@ -35,6 +49,7 @@ int	fireDeliveryPerson(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer)
 	{
 		pDelComp->delPerArray[i] = pDelComp->delPerArray[i + 1];
 	}
+
 	DeliveryPerson** newDelPerArray = (DeliveryPerson**)realloc(pDelComp->delPerArray, (pDelComp->deliveryPersonCount - 1) * sizeof(DeliveryPerson*));
 	if (!newDelPerArray)
 	{

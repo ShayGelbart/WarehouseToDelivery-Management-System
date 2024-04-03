@@ -14,7 +14,7 @@ typedef struct
 
 void			initDeliveryCompany(DeliveryCompany* delComp);
 //DeliveryPerson* findDeliveryPerson(DeliveryCompany* delComp);
-int				addDeliveryPerson(DeliveryCompany* delComp);
+int				addDeliveryPerson(DeliveryCompany* pDelComp);
 int findDeliveryPersonInArr(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer);
 int				fireDeliveryPerson(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer);
 int				compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson* p2);

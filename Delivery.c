@@ -53,7 +53,6 @@ void addProduct(Delivery* pDelivery, Product* pProduct)
 
 void changeRatingWhenDelivered(Delivery* pDelivery)
 {
-	printf("Please enter a rating for your delivery(0.0-5.0):\n");
 	double rating;
 	do
 	{
