@@ -35,9 +35,9 @@ int addRatingToArray(DeliveryPerson* pDelPer, double rating)
 	return 1;
 }
 
-int calcAverageRating(DeliveryPerson* pDelPer)
+double calcAverageRating(DeliveryPerson* pDelPer)
 {
-	int sum = 0, avr = 0;
+	double sum = 0, avr = 0;
 	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
 		sum += pDelPer->ratingArr[i];
 	avr = sum / pDelPer->numOfDeliveries;

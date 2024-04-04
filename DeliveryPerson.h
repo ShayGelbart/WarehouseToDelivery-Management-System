@@ -23,7 +23,7 @@ typedef struct
 void initDeliveryPerson(DeliveryPerson* pDelPer);
 int changeRating(DeliveryPerson* pDelPer, double Rating); // add rating to the array
 int addRatingToArray(DeliveryPerson* pDelPer, double Rating);
-int calcAverageRating(DeliveryPerson* pDelPer);
+double calcAverageRating(DeliveryPerson* pDelPer);
 void printDeliveryPerson(DeliveryPerson* pDelPer);
 
 #endif // !__DELIVERY_PERSON__

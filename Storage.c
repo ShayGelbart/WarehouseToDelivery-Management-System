@@ -36,8 +36,14 @@ int addProductToStorage(Storage* pStorage)
 
 int addDeliveryCompany(Storage* pStorage)
 {
+	DeliveryCompany* temp = (DeliveryCompany*)realloc(pStorage->deliveryCompanyArr, (pStorage->numOfDeliveryComp + 1) * sizeof(DeliveryCompany));
+	if (!temp)
+		return 0;
 
-    return 0;
+	pStorage->deliveryCompanyArr = temp;
+	initDeliveryCompany(&pStorage->deliveryCompanyArr[pStorage->numOfDeliveryComp]);
+	pStorage->numOfDeliveryComp++;
+	return 1;
 }
 
 int addDelivery(Storage* pStorage)
@@ -46,9 +52,8 @@ int addDelivery(Storage* pStorage)
 	if (!newDelivery)
 		return 0;
 
-	// Reallocate memory for deliveryArr
 	Delivery** temp = (Delivery**)realloc(pStorage->deliveryArr, (pStorage->numOfDeliveries + 1) * sizeof(Delivery*));
-	if (!temp) // Check if realloc failed
+	if (!temp) 
 	{
 		free(newDelivery); 
 		return 0; 
@@ -60,9 +65,23 @@ int addDelivery(Storage* pStorage)
 	return 1;
 }
 
-int addManufcturer(Storage* pStorage)
+int addManufacturer(Storage* pStorage)
 {
+	Manufacturer* newMan = (Manufacturer*)malloc(sizeof(Manufacturer));
+	if (!newMan)
+		return 0;
 
+	Manufacturer** temp = (Manufacturer**)realloc(pStorage->manArray, (pStorage->numOfManufacturers + 1) * sizeof(Manufacturer*));
+	if (!temp)
+	{
+		free(newMan);
+		return 0;
+	}
+	pStorage->manArray = temp;
+
+	initManufacturer(newMan, pStorage->manArray);
+	pStorage->manArray[pStorage->numOfManufacturers] = newMan;
+	pStorage->manArray++;
 	return 1;
 }
 

@@ -125,10 +125,10 @@ BOOL L_delete(NODE* pNode, void(*freeKey)(void*))
 //			a value to be found
 // Output:	pointer to the node containing the Value
 /////////////////////////////////////////////////////////
-const NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*))
+NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*))
 {
 	const NODE* temp = NULL;
-	const NODE* returnValue = NULL;
+	NODE* returnValue = NULL;
 	while (pNode != NULL)
 	{
 		if (compare(pNode->key, Value) == 0)
