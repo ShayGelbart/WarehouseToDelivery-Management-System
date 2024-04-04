@@ -19,9 +19,13 @@ typedef struct
 	int houseNumber;
 }Address;
 
-int initAddressFromFile(Address* pAddress, FILE* fp);
-void initAddress(Address* pAddress);
-int getRegion();
-void printAddress(Address* pAddress);
+int				initAddressFromFile(Address* pAddress, FILE* fp);
+void			initAddress(Address* pAddress);
+int				getRegion();
+int				initAddressFromTextFile(FILE* fp, Address* pAddress);
+int				initAddressFromBinaryFile(FILE* fp, Address* pAddress);
+int				writeAddressToTextFile(FILE* fp, Address* pAddress);
+int				writeAddressToBinaryFile(FILE* fp, Address* pAddress);
+void			printAddress(Address* pAddress);
 
 #endif

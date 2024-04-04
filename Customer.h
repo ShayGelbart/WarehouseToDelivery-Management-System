@@ -15,9 +15,13 @@ typedef struct
 
 
 void		initCustomer(Customer* pCustomer);
-void		printCustomer(Customer* pCustomer);
 void		changeCredits(Customer* pCustomer, int changeNumber);
 void		changeAddress(Customer* pCustomer, Address* pAddress);
+int			initCustomerFromTextFile(FILE* fp, Customer* pCustomer);
+int			initCustomerFromBinaryFile(FILE* fp, Customer* pCustomer);
+int			writeCustomerToTextFile(FILE* fp, Customer* pCustomer);
+int			writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer);
+void		printCustomer(Customer* pCustomer);
 
 //Person* newCustomer(char* pName, Delivery* pDeliveries, Address* address, int credits, int numberOfDeliveries);
 

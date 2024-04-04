@@ -41,3 +41,27 @@ void changeAddress(Customer* pCustomer, Address* pAddress)
 {
 	pCustomer->address = *pAddress;
 }
+
+int initCustomerFromTextFile(FILE* fp, Customer* pCustomer)
+{
+	initPersonFromTextFile(fp, pCustomer);
+	return 0;
+}
+
+int initCustomerFromBinaryFile(FILE* fp, Customer* pCustomer)
+{
+	initPersonFromBinaryFile(fp, pCustomer);
+	return 0;
+}
+
+int writeCustomerToTextFile(FILE* fp, Customer* pCustomer)
+{
+	writePersonToTextFile(fp, pCustomer);
+	return 0;
+}
+
+int writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer)
+{
+	writePersonToBinaryFile(fp, pCustomer);
+	return 0;
+}

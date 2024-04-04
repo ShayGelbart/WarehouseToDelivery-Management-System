@@ -11,5 +11,8 @@ typedef struct
 
 //Person*		newPerson(char* pName);
 void			initPerson(Person* pPerson);
-int				initPersonFromFile(FILE* fp, Person* pPerson);
+int				initPersonFromTextFile(FILE* fp, Person* pPerson);
+int				initPersonFromBinaryFile(FILE* fp, Person* pPerson);
+int				writePersonToTextFile(FILE* fp, Person* pPerson);
+int				writePersonToBinaryFile(FILE* fp, Person* pPerson);
 void			printPerson(Person* pPerson);

@@ -37,6 +37,26 @@ int getRegion()
 		return (eRegionType)option;
 }
 
+int initAddressFromTextFile(FILE* fp, Address* pAddress)
+{
+	return 0;
+}
+
+int initAddressFromBinaryFile(FILE* fp, Address* pAddress)
+{
+	return 0;
+}
+
+int writeAddressToTextFile(FILE* fp, Address* pAddress)
+{
+	return 0;
+}
+
+int writeAddressToBinaryFile(FILE* fp, Address* pAddress)
+{
+	return 0;
+}
+
 void printAddress(Address* pAddress)
 {
     printf("In region: %s\nCity: %s\tStreet: %s\tHouse: %d\n" , regionTypeStr[pAddress->region], pAddress->city, pAddress->street , pAddress->houseNumber);
