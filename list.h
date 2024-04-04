@@ -29,7 +29,7 @@ NODE* L_insert(NODE* pNode, DATA value, int(*compare)(const void*, const void*))
 
 BOOL L_delete(NODE* pNode, void(*freeKey)(void*));					// erase node after *pNode
 
-const NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*));		// return a pointer to the node 
+NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*));		// return a pointer to the node 
 
 BOOL L_free(LIST* pList, void(*freeKey)(void*));					// free list memory
 

@@ -22,6 +22,6 @@ void initProduct(Product* pProduct, Manufacturer** manArray);
 void printManufacturerByType(Manufacturer** manArray, eProductType productType);
 eProductType getTypeProduct();
 void printProduct(const Product* pProduct);
-int compareProducts(const Product* p1, const  Product* p2);
+int compareProducts(const Product* p1, const Product* p2);
 
 #endif

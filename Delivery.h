@@ -22,8 +22,8 @@ typedef struct
 int		initDelivery(Delivery* pDelivery);
 void		printDelivery(Delivery* pDelivery);
 void		changeDeliveryDate(Delivery* pDelivery);
-void		changeProduct(Delivery* pDelivery,const Product* pProduct1, Product* pProduct2);
-int			removeProduct(Delivery* pDelivery, const Product* pProduct);
+void		changeProduct(Delivery* pDelivery, Product* pProduct1, Product* pProduct2);
+int			removeProduct(Delivery* pDelivery, Product* pProduct);
 void		addProduct(Delivery* pDelivery, Product* pProduct);
 void		changeRatingWhenDelivered(Delivery* pDelivery);
 

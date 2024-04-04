@@ -22,14 +22,14 @@ void changeDeliveryDate(Delivery* pDelivery)
 	pDelivery->deliveryDate = newDate;
 }
 
-void changeProduct(Delivery* pDelivery, const Product* pProduct1, Product* pProduct2)
+void changeProduct(Delivery* pDelivery, Product* pProduct1, Product* pProduct2)
 {
 	//pProduct1 product that needs to be removed and instead of it needs to be put pProduct2
 	removeProduct(pDelivery, pProduct1);
 	addProduct(pDelivery, pProduct2);
 }
 
-int removeProduct(Delivery* pDelivery, const Product* pProduct)
+int removeProduct(Delivery* pDelivery, Product* pProduct)
 {
 	NODE* temp = L_find(&pDelivery->products->head,   pProduct, compareProducts);
 	if (!L_delete(temp, NULL))
