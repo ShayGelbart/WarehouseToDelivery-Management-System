@@ -13,7 +13,7 @@
 typedef struct
 {
 	Person* person;
-	int* ratingArr;
+	double* ratingArr;
 	int numOfDeliveries;
 	double averageRating;
 	int deliveryTime;

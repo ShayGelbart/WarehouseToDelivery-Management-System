@@ -50,11 +50,10 @@ int addDelivery(Storage* pStorage)
 	Delivery** temp = (Delivery**)realloc(pStorage->deliveryArr, (pStorage->numOfDeliveries + 1) * sizeof(Delivery*));
 	if (!temp) // Check if realloc failed
 	{
-		free(newDelivery); // Free the newly allocated memory
-		return 0; // Return error code
+		free(newDelivery); 
+		return 0; 
 	}
-	pStorage->deliveryArr = temp; // Assign the reallocated pointer to deliveryArr
-
+	pStorage->deliveryArr = temp; 
 	initDelivery(newDelivery);
 	pStorage->deliveryArr[pStorage->numOfDeliveries] = newDelivery;
 	pStorage->numOfDeliveries++;
@@ -70,4 +69,9 @@ int addManufcturer(Storage* pStorage)
 int compareManufacturersById(Storage* pStorage, Manufacturer* pMan)
 {
     return 0;
+}
+
+void printStorage(Storage* pStorage)
+{
+
 }

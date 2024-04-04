@@ -12,19 +12,14 @@ int initDelivery(Delivery* pDelivery)
 	initDeliveryCompany(pDelivery->deliveryCompany);
 	initDeliveryPerson(pDelivery->deliveryPerson);
 
-
 	return 1;
-
 }
-
-
 
 void changeDeliveryDate(Delivery* pDelivery)
 {
 	Date newDate;
 	getCorrectDate(&newDate);
 	pDelivery->deliveryDate = newDate;
-
 }
 
 void changeProduct(Delivery* pDelivery, const Product* pProduct1, Product* pProduct2)
@@ -32,12 +27,10 @@ void changeProduct(Delivery* pDelivery, const Product* pProduct1, Product* pProd
 	//pProduct1 product that needs to be removed and instead of it needs to be put pProduct2
 	removeProduct(pDelivery, pProduct1);
 	addProduct(pDelivery, pProduct2);
-
 }
 
 int removeProduct(Delivery* pDelivery, const Product* pProduct)
 {
-	
 	NODE* temp = L_find(&pDelivery->products->head,   pProduct, compareProducts);
 	if (!L_delete(temp, NULL))
 		return 0;
@@ -48,7 +41,6 @@ int removeProduct(Delivery* pDelivery, const Product* pProduct)
 void addProduct(Delivery* pDelivery, Product* pProduct)
 {
 	L_insert(&pDelivery->products->head, pProduct, compareProducts);
-
 }
 
 void changeRatingWhenDelivered(Delivery* pDelivery)
@@ -58,7 +50,7 @@ void changeRatingWhenDelivered(Delivery* pDelivery)
 	{
 		printf("Please enter a rating for your delivery(0.0-5.0):\n");
 		scanf("%lf", &rating);
-	} while (rating < 0.0 || rating>5.0);
+	} while (rating < 0.0 || rating >5.0);
 	changeRating(pDelivery->deliveryPerson, rating);
 }
 

@@ -25,7 +25,14 @@ int changeRating(DeliveryPerson* pDelPer, double rating)
 
 int addRatingToArray(DeliveryPerson* pDelPer, double rating)
 {
-	return 0;
+	double* temp = (double*)realloc(pDelPer->ratingArr, (pDelPer->numOfDeliveries + 1) * sizeof(double));
+	if (!temp)
+		return 0;
+	
+	pDelPer->ratingArr = temp;
+	pDelPer->ratingArr[pDelPer->numOfDeliveries] = rating;
+	pDelPer->numOfDeliveries++;
+	return 1;
 }
 
 int calcAverageRating(DeliveryPerson* pDelPer)

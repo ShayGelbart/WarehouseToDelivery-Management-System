@@ -24,5 +24,6 @@ int addDeliveryCompany(Storage* pStorage);
 int addDelivery(Storage* pStorage);
 int addManufcturer(Storage* pStorage);
 int compareManufacturersById(Storage* pStorage, Manufacturer* pMan);
+void printStorage(Storage* pStorage);
 
 #endif // !__STORAGE__
