@@ -44,24 +44,24 @@ void changeAddress(Customer* pCustomer, Address* pAddress)
 
 int initCustomerFromTextFile(FILE* fp, Customer* pCustomer)
 {
-	initPersonFromTextFile(fp, pCustomer);
+	initPersonFromTextFile(fp, &pCustomer->person);
 	return 0;
 }
 
 int initCustomerFromBinaryFile(FILE* fp, Customer* pCustomer)
 {
-	initPersonFromBinaryFile(fp, pCustomer);
+	initPersonFromBinaryFile(fp, &pCustomer->person);
 	return 0;
 }
 
 int writeCustomerToTextFile(FILE* fp, Customer* pCustomer)
 {
-	writePersonToTextFile(fp, pCustomer);
+	writePersonToTextFile(fp, &pCustomer->person);
 	return 0;
 }
 
 int writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer)
 {
-	writePersonToBinaryFile(fp, pCustomer);
+	writePersonToBinaryFile(fp, &pCustomer->person);
 	return 0;
 }
