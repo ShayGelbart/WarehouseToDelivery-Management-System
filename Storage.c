@@ -66,10 +66,6 @@ int addManufcturer(Storage* pStorage)
 	return 1;
 }
 
-int compareManufacturersById(Storage* pStorage, Manufacturer* pMan)
-{
-    return 0;
-}
 
 void printStorage(Storage* pStorage)
 {

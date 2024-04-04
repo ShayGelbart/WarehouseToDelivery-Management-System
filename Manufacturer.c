@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "Manufacturer.h"
 
-void initManufacturer(Manufacturer* pMan, Manufacturer** manArray)
+void initManufacturer(Manufacturer* pMan, Manufacturer** manArray, int numOfManufacturers)
 {
 	printf("Enter manufacturer name");
 	myGets(pMan->name, MAX_STR_LEN);
@@ -11,37 +12,67 @@ void initManufacturer(Manufacturer* pMan, Manufacturer** manArray)
 	{
 		printf("Enter your id\n");
 		scanf("%d", &pMan->id);
-	} while (pMan->id <= 0 && compareManufacturersById(manArray, pMan));
+	} while (pMan->id <= 0 || findManufacturersById(pMan, manArray, numOfManufacturers));
 }
-int	 readManufacturerFromTextFile(Manufacturer* pMan, const char* fileName)
+int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp)
 {
 	char name[MAX_STR_LEN] = { 0 };
-	int id
-	FILE* fp;
-	fp = fopen(fileName, "r");
-	if (!fp)
-		return 0;
+	int id = 0;
+
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';
 
-	if(fgets()
-}
-int  writeManufacturerToTextFile(Manufacturer* pMan, const char* fileName)
-{
-	return 0;
+	fscanf(fp, "%d", &id);
+
+	strcpy(pMan->name, name);
+	return 1;
+
 
 }
-int  readManufacturerfromBinFile(Manufacturer* pMan, const char* fileName)
+
+int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp)
 {
-	return 0;
+	if (fprintf(fp, "%s\n%d\n", pMan->name, pMan->id) < 0)
+		return 0;
+	return 1;
 }
-int  writeManufacturerfromBinFile(Manufacturer* pMan, const char* fileName)
+
+int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp)
 {
-	return 0;
+	int len;
+	if (fread(&len, sizeof(int), 1, fp) != 1)
+		return 0;
+
+	if (fread(&pMan->name, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
+		return 0;
+	pMan->name[len] = '\0';
+
+	if (fread(&pMan->id, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
 }
-int compareManufacturersById(Manufacturer* pMan, Manufacturer** manArray)
+
+int  writeManufacturerToBinFile(Manufacturer* pMan, FILE* fp)
 {
+	int len = (int)strlen(pMan->name) + 1;
+	if (fwrite(&len, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&pMan->name, sizeof(char), len, fp) != len)
+		return 0;
+	if (fwrite(&pMan->id, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
+}
+
+int findManufacturersById(Manufacturer* pMan, Manufacturer** manArray, int numOfManufacturers)
+{
+
+	for (int i = 0; i < numOfManufacturers; i++)
+	{
+		if (manArray[i]->id == pMan->id)
+			return 1;
+	}
 	return 0;
 }
 

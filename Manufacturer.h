@@ -10,12 +10,12 @@ typedef struct
 	int id;
 }Manufacturer;
 
-void initManufacturer(Manufacturer* pMan , Manufacturer** manArray);
-int	 readManufacturerFromTextFile(Manufacturer* pMan, const char* fileName);
-int  writeManufacturerToTextFile(Manufacturer* pMan, const char* fileName);
-int  readManufacturerfromBinFile(Manufacturer* pMan,const char* fileName);
-int  writeManufacturerfromBinFile(Manufacturer* pMan, const char* fileName);
-int compareManufacturersById(Manufacturer* pMan, Manufacturer** manArray);
+void initManufacturer(Manufacturer* pMan , Manufacturer** manArray,int numOfManufacturers);
+int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp);
+int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp);
+int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp);
+int  writeManufacturerToBinFile(Manufacturer* pMan, FILE* fp);
+int findManufacturersById(Manufacturer* pMan, Manufacturer** manArray,int numOfManufacturers);
 void printManufacturer(Manufacturer* pMan);
 
 #endif
