@@ -15,7 +15,7 @@ void initDeliveryPerson(DeliveryPerson* pDelPer)
 	pDelPer->id = generateRandom(UPPER_BORDER_ID, LOWER_BORDER_ID);
 }
 
-int initCustomerFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
+int	initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
 {
 	if(!initPersonFromTextFile(fp, pDelPer->person))
 		return 0;
@@ -39,12 +39,31 @@ int initCustomerFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
 	return 1;
 }
 
-int initCustomerFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
+int	initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
 {
-	return 0;
+	if(!initPersonFromBinaryFile(fp, pDelPer->person))
+		return 0;
+	if (fread(&pDelPer->numOfDeliveries, sizeof(int), 1, fp) != 1)
+		return 0;
+	
+	pDelPer->ratingArr = (double*)malloc(pDelPer->numOfDeliveries * sizeof(double));
+	if (!pDelPer->ratingArr)
+		return 0;
+
+	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
+		if (fread(&pDelPer->ratingArr[i], sizeof(int), 1, fp) != 1)
+			return 0;
+
+	if (fread(&pDelPer->averageRating, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(&pDelPer->deliveryTime, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(&pDelPer->id, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
 }
 
-int writeCustomerToTextFile(FILE* fp, DeliveryPerson* pDelPer)
+int	writeDeliveryPersonToTextFile(FILE* fp, DeliveryPerson* pDelPer)
 {
 	if(!writePersonToTextFile(fp, pDelPer->person))
 		return 0;
@@ -55,7 +74,7 @@ int writeCustomerToTextFile(FILE* fp, DeliveryPerson* pDelPer)
 	return 1;
 }
 
-int writeCustomerToBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
+int	writeDeliveryPersonToBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
 {
 	if(!writePersonToBinaryFile(fp, pDelPer->person))
 		return 0;

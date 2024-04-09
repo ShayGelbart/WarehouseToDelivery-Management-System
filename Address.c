@@ -65,12 +65,14 @@ int initAddressFromBinaryFile(FILE* fp, Address* pAddress)
 		return 0;
 	if (fread(&lenCity, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pAddress->city, sizeof(char), lenCity, fp) != lenCity)
+	if (fread(pAddress->city, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
 		return 0;
+	pAddress->city[lenCity] = '\0';
 	if (fread(&lenStreet, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pAddress->street, sizeof(char), lenStreet, fp) != lenStreet)
+	if (fread(pAddress->street, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
 		return 0;
+	pAddress->street[lenStreet] = '\0';
 	return 1;
 }
 

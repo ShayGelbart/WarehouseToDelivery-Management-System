@@ -21,10 +21,10 @@ typedef struct
 }DeliveryPerson;
 
 void initDeliveryPerson(DeliveryPerson* pDelPer);
-int	initCustomerFromTextFile(FILE* fp, DeliveryPerson* pDelPer);
-int	initCustomerFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
-int	writeCustomerToTextFile(FILE* fp, DeliveryPerson* pDelPer);
-int	writeCustomerToBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
+int	initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer);
+int	initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
+int	writeDeliveryPersonToTextFile(FILE* fp, DeliveryPerson* pDelPer);
+int	writeDeliveryPersonToBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
 int changeRating(DeliveryPerson* pDelPer, double Rating); // add rating to the array
 int addRatingToArray(DeliveryPerson* pDelPer, double Rating);
 double calcAverageRating(DeliveryPerson* pDelPer);
