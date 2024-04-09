@@ -10,9 +10,69 @@ void initDeliveryPerson(DeliveryPerson* pDelPer)
 	pDelPer->averageRating = 0;
 	pDelPer->numOfDeliveries = 0;
 
-	srand((unsigned) time(NULL));
+	srand((unsigned)time(NULL));
 	pDelPer->deliveryTime = generateRandom(UPPER_BORDER_TIME , LOWER_BORDER_TIME);
 	pDelPer->id = generateRandom(UPPER_BORDER_ID, LOWER_BORDER_ID);
+}
+
+int initCustomerFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
+{
+	if(!initPersonFromTextFile(fp, pDelPer->person))
+		return 0;
+	if (fscanf(fp, "%d", &pDelPer->numOfDeliveries) < 0)
+		return 0;
+
+	pDelPer->ratingArr = (double*)malloc(pDelPer->numOfDeliveries * sizeof(double));
+	if (!pDelPer->ratingArr)
+		return 0;
+	
+	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
+		if (fscanf(fp, "%lf", &pDelPer->ratingArr[i]) < 0)
+			return 0;
+
+	if (fscanf(fp, "%lf", &pDelPer->averageRating) < 0)
+		return 0;
+	if (fscanf(fp, "%d", &pDelPer->deliveryTime) < 0)
+		return 0;
+	if (fscanf(fp, "%d", &pDelPer->id) < 0)
+		return 0;
+	return 1;
+}
+
+int initCustomerFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
+{
+	return 0;
+}
+
+int writeCustomerToTextFile(FILE* fp, DeliveryPerson* pDelPer)
+{
+	if(!writePersonToTextFile(fp, pDelPer->person))
+		return 0;
+	fprintf(fp, "%d\n", pDelPer->numOfDeliveries);
+	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
+		fprintf(fp, "%lf\n", pDelPer->ratingArr[i]);
+	fprintf(fp, "%lf\n%d\n%d\n", pDelPer->averageRating, pDelPer->deliveryTime, pDelPer->id);
+	return 1;
+}
+
+int writeCustomerToBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
+{
+	if(!writePersonToBinaryFile(fp, pDelPer->person))
+		return 0;
+	if (fwrite(&pDelPer->numOfDeliveries, sizeof(int), 1, fp) != 1)
+		return 0;
+	
+	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
+		if (fwrite(&pDelPer->ratingArr[i], sizeof(double), 1, fp) != 1)
+			return 0;
+	
+	if (fwrite(&pDelPer->averageRating, sizeof(double), 1, fp) != 1)
+		return 0;
+	if (fwrite(&pDelPer->deliveryTime, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&pDelPer->id, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
 }
 
 int changeRating(DeliveryPerson* pDelPer, double rating)
