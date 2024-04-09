@@ -10,7 +10,7 @@ typedef struct
 	int id;
 }Manufacturer;
 
-void initManufacturer(Manufacturer* pMan , Manufacturer** manArray,int numOfManufacturers);
+void initManufacturer(Manufacturer* pMan, Manufacturer** manArray, int numOfManufacturers);
 int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp);
 int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp);
 int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp);

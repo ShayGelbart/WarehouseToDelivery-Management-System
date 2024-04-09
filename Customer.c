@@ -44,24 +44,42 @@ void changeAddress(Customer* pCustomer, Address* pAddress)
 
 int initCustomerFromTextFile(FILE* fp, Customer* pCustomer)
 {
-	initPersonFromTextFile(fp, &pCustomer->person);
-	return 0;
+	if (!initPersonFromTextFile(fp, &pCustomer->person))
+		return 0;
+	if (!initAddressFromTextFile(fp, &pCustomer->address))
+		return 0;
+	if(fscanf(fp, "%d", &pCustomer->credits) < 0)
+		return 0;
+	return 1;
 }
 
 int initCustomerFromBinaryFile(FILE* fp, Customer* pCustomer)
 {
-	initPersonFromBinaryFile(fp, &pCustomer->person);
-	return 0;
+	if (!initPersonFromBinaryFile(fp, &pCustomer->person))
+		return 0;
+	if (!initAddressFromBinaryFile(fp, &pCustomer->address))
+		return 0;
+	if (fread(&pCustomer->credits, sizeof(int), 1, fp) != 1)
+		return 0;	
+	return 1;
 }
 
 int writeCustomerToTextFile(FILE* fp, Customer* pCustomer)
 {
-	writePersonToTextFile(fp, &pCustomer->person);
-	return 0;
+	if(!writePersonToTextFile(fp, &pCustomer->person))
+		return 0;
+	writeAddressToTextFile(fp, &pCustomer->address);
+	fprintf(fp, "%d\n", pCustomer->credits);
+	return 1;
 }
 
 int writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer)
 {
-	writePersonToBinaryFile(fp, &pCustomer->person);
-	return 0;
+	if(!writePersonToBinaryFile(fp, &pCustomer->person))
+		return 0;
+	if (!writeAddressToBinaryFile(fp, &pCustomer->address))
+		return 0;
+	if (fwrite(&pCustomer->credits, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
 }

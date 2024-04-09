@@ -18,7 +18,7 @@ typedef struct
 	char* nameOfProduct;
 }Product;
 
-void initProduct(Product* pProduct, Manufacturer** manArray);
+void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers);
 void printManufacturerByType(Manufacturer** manArray, eProductType productType);
 eProductType getTypeProduct();
 void printProduct(const Product* pProduct);

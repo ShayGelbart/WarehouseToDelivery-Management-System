@@ -1,10 +1,6 @@
 #include <stdio.h>
+#include <string.h>
 #include "Address.h"
-
-int initAddressFromFile(Address* pAddress, FILE* fp)
-{
-    return 0;
-}
 
 void initAddress(Address* pAddress)
 {
@@ -39,22 +35,64 @@ int getRegion()
 
 int initAddressFromTextFile(FILE* fp, Address* pAddress)
 {
-	return 0;
+	int temp;
+	if (fscanf(fp, "%d", &temp) < 0)
+		return 0;
+	pAddress->region = (eRegionType)temp;
+	char city[MAX_STR_LEN] = { 0 };
+	char street[MAX_STR_LEN] = { 0 };
+
+	if (fgets(city, MAX_STR_LEN, fp) == NULL)
+		return 0;
+	city[strlen(city) - 1] = '\0';
+
+	if (fgets(street, MAX_STR_LEN, fp) == NULL)
+		return 0;
+	street[strlen(street) - 1] = '\0';
+	
+	strcpy(pAddress->city, city);
+	strcpy(pAddress->street, street);
+
+	if (fscanf(fp, "%d", &pAddress->houseNumber) < 0)
+		return 0;
+	return 1;
 }
 
 int initAddressFromBinaryFile(FILE* fp, Address* pAddress)
 {
-	return 0;
+	int lenCity, lenStreet;
+	if(fread(&pAddress->region, sizeof(int), 1 ,fp) != 1)
+		return 0;
+	if (fread(&lenCity, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pAddress->city, sizeof(char), lenCity, fp) != lenCity)
+		return 0;
+	if (fread(&lenStreet, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pAddress->street, sizeof(char), lenStreet, fp) != lenStreet)
+		return 0;
+	return 1;
 }
 
-int writeAddressToTextFile(FILE* fp, Address* pAddress)
+void writeAddressToTextFile(FILE* fp, Address* pAddress)
 {
-	return 0;
+	fprintf(fp, "%d\n%s\n%s\n%d\n", pAddress->region, pAddress->city, pAddress->street, pAddress->houseNumber);
 }
 
 int writeAddressToBinaryFile(FILE* fp, Address* pAddress)
 {
-	return 0;
+	int lenCity = (int)strlen(pAddress->city), lenStreet = (int)strlen(pAddress->street);
+	if (fwrite(&pAddress->region, sizeof(eRegionType), 1, fp) != 1)
+		return 0;
+	if (fwrite(&lenCity, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(pAddress->city, sizeof(char), lenCity, fp) != lenCity)
+		return 0;
+	if (fwrite(&lenStreet, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(pAddress->street, sizeof(char), lenStreet, fp) != lenStreet)
+		return 0;
+	return 1;
 }
 
 void printAddress(Address* pAddress)

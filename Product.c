@@ -3,7 +3,7 @@
 #include "Product.h"
 #include "General.h"
 
-void initProduct(Product* pProduct, Manufacturer** manArray)
+void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers)
 {
 	pProduct->productType = getTypeProduct();
 	printManufacturerByType(manArray , pProduct->productType);
@@ -20,7 +20,7 @@ void initProduct(Product* pProduct, Manufacturer** manArray)
 		pProduct->manufacturer = *manArray[manIndex - 1];
 	}
 	else
-		initManufacturer(&pProduct->manufacturer , manArray);
+		initManufacturer(&pProduct->manufacturer , manArray, numOfManufacturers);
 
 	pProduct->nameOfProduct = getStrExactName("Enter the name of your product\n");
 }

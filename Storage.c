@@ -28,7 +28,7 @@ int addProductToStorage(Storage* pStorage)
 	}
 	pStorage->productArr = temp;
 
-	initProduct(newProduct, pStorage->manArray);
+	initProduct(newProduct, pStorage->manArray, pStorage->numOfManufacturers);
 	pStorage->productArr[pStorage->numOfProducts] = newProduct;
 	pStorage->numOfProducts++;
 	return 1;
@@ -78,8 +78,8 @@ int addManufacturer(Storage* pStorage)
 		return 0;
 	}
 	pStorage->manArray = temp;
-
-	initManufacturer(newMan, pStorage->manArray);
+	
+	initManufacturer(newMan, pStorage->manArray, pStorage->numOfManufacturers);
 	pStorage->manArray[pStorage->numOfManufacturers] = newMan;
 	pStorage->manArray++;
 	return 1;
