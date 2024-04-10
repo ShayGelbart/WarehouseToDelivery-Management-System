@@ -20,6 +20,7 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';
+	pDelComp->name = _strdup(name);
 
 	if (fscanf(fp, "%d", &pDelComp->deliveryPersonCount) < 0)
 		return 0;
@@ -99,7 +100,7 @@ int writeDeliveryCompanyToBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 		if (!writeDeliveryPersonToBinaryFile(fp, pDelComp->delPerArray[i]))
 			return 0;
 
-	if (fwrite(&pDelComp->region, sizeof(int), 1, fp) != 1)
+	if (fwrite(&pDelComp->region, sizeof(eRegionType), 1, fp) != 1)
 		return 0;
 	return 1;
 }
