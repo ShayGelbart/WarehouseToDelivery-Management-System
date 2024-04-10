@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Delivery.h"
+#include "list.h"
 
 int initDelivery(Delivery* pDelivery)
 {
@@ -13,6 +14,40 @@ int initDelivery(Delivery* pDelivery)
 	initDeliveryPerson(pDelivery->deliveryPerson);
 
 	return 1;
+}
+
+int readDeliveryFromTextFile(FILE* fp, Delivery* pDel)
+{
+	
+	if(!initCustomerFromTextFile(fp,pDel->customer))
+	return 0;
+
+	
+}
+
+int writeDeliveryToTextFile(FILE* fp, Delivery* pDel)
+{
+	if(!writeCustomerToTextFile(fp,pDel->customer))
+	return 0;
+	fprintf(fp, "%d\n", pDel->numberOfProducts);
+	NODE* curr = pDel->products->head.next;
+	while (curr != NULL)
+	{
+		writeProductToText(fp, curr->key);
+		curr = curr->next;
+	}
+	if (!writeDateToTextFile(fp, pDel->deliveryDate))
+		return 0;
+}
+
+int readDeliveryFromBinaryFile(FILE* fp, Delivery* pDel)
+{
+	return 0;
+}
+
+int writeDeliveryToBinaryFile(FILE* fp, Delivery* pDel)
+{
+	return 0;
 }
 
 void changeDeliveryDate(Delivery* pDelivery)
