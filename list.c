@@ -43,57 +43,20 @@ int L_length(LIST* list) {
 //			a value to be stored in the new node
 // Output:	pointer to the new node
 /////////////////////////////////////////////////////////////////
-NODE* L_insert(NODE* pNode, DATA value, int(*compare)(const void*, const void*))
+NODE* L_insert(NODE* pNode, DATA Value)
 {
-	NODE* temp, * current;
-	int check = 0;
+	NODE* tmp;
 
-	if (!pNode)
-		return NULL;
-	current = pNode;
-	// A ,  ,C , D
-	temp = (NODE*)malloc(sizeof(NODE));	// new node
-	if (temp == NULL)
-		return NULL;
-	temp->key = value;
+	if (!pNode) return NULL;
 
-	if (pNode->next == NULL)
-	{
-		pNode->next = (NODE*)malloc(sizeof(NODE));
-		if (!pNode->next)
-			return NULL;
-		pNode->next->key = value;
-		pNode->next->next = NULL;
-	}
-	else if (compare(temp->key, pNode->next->key) < 0)
-	{
-		temp->next = pNode->next; // Point the new node to the current head
-		pNode->next = temp;
-		//pList->head = *temp;
-	}
-	else
-	{
-		current = current->next;
-		while (current->next != NULL)
-		{
-			check = 0;
-			if (compare(temp->key, current->key) > 0 && compare(temp->key, current->next->key) < 0)
-			{
-				temp->next = current->next;
-				current->next = temp;
-				check = 1;
-				break;
-			}
-			current = current->next;
-		}
-		if (!check)
-		{
-			temp->next = current->next; // in the end
-			current->next = temp;
-		}
-	}
+	tmp = (NODE*)malloc(sizeof(NODE));	// new node
 
-	return temp;
+	if (tmp != NULL) {
+		tmp->key = Value;
+		tmp->next = pNode->next;
+		pNode->next = tmp;
+	}
+	return tmp;
 }
 
 
