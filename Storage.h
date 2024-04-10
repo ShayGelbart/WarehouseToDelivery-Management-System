@@ -20,15 +20,22 @@ typedef struct
 	Manufacturer** manArray;
 }Storage;
 
-void initStorage(Storage* pStorage);
-int initStorageFromTextFile(char* fileName, Storage* pStorage);
-int initStorageFromBinaryFile(char* fileName, Storage* pStorage);
-int writeStorageToTextFile(char* fileName, Storage* pStorage);
-int writeStorageToBinaryFile(char* fileName, Storage* pStorage);
-int addProductToStorage(Storage* pStorage);
-int addDeliveryCompany(Storage* pStorage);
-int addDelivery(Storage* pStorage);
-int addManufacturer(Storage* pStorage);
-void printStorage(Storage* pStorage);
+void				initStorage(Storage* pStorage);
+int					initStorageFromTextFile(char* fileName, Storage* pStorage);
+int					initStorageFromBinaryFile(char* fileName, Storage* pStorage);
+int					writeStorageToTextFile(char* fileName, Storage* pStorage);
+int					writeStorageToBinaryFile(char* fileName, Storage* pStorage);
+void				uploadSystemFromFile(char* fileName, Storage* pStorage);
+int					addProductToStorage(Storage* pStorage);
+int					addDeliveryCompany(Storage* pStorage);
+int					addDelivery(Storage* pStorage);
+int					addManufacturer(Storage* pStorage);
+DeliveryCompany*	findDeliveryCompanyByRegion(DeliveryCompany* deliveryCompArr, int size, eRegionType region);
+int					assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery);
+void				printProductArr(Storage* pStorage);
+void				printDeliveryCompanyArr(Storage* pStorage);
+void				printDeliveryArr(Storage* pStorage);
+void				printManufacturerArr(Storage* pStorage);
+void				printStorage(Storage* pStorage);
 
 #endif // !__STORAGE__

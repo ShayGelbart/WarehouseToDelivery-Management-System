@@ -299,6 +299,17 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 	return 1;
 }
 
+void uploadSystemFromFile(char* fileName, Storage* pStorage)
+{
+	int choice;
+	printf("Choose the kind of file to upload the system from:\nText - Enter 0\nBinary - Enter 1");
+	scanf("%d", &choice);
+	if (choice == 0)
+		initStorageFromTextFile(fileName, pStorage);
+	else
+		initStorageFromBinaryFile(fileName, pStorage);
+}
+
 int addProductToStorage(Storage* pStorage)
 {
 	Product* newProduct = (Product*)malloc(sizeof(Product));
@@ -370,6 +381,30 @@ int addManufacturer(Storage* pStorage)
 	return 1;
 }
 
+void printProductArr(Storage* pStorage)
+{
+	printf("Every product in storage:\n");
+	generalArrFunction(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), printProduct);
+}
+
+void printDeliveryCompanyArr(Storage* pStorage)
+{
+	printf("Every delivery company in storage:\n");
+	generalArrFunction(pStorage->deliveryCompanyArr, pStorage->numOfDeliveryComp, sizeof(DeliveryCompany), printDeliveryCompany);
+}
+
+void printDeliveryArr(Storage* pStorage)
+{
+	printf("Every delivery in storage:\n");
+	generalArrFunction(pStorage->deliveryArr, pStorage->numOfDeliveries, sizeof(Delivery*), printDelivery);
+}
+
+void printManufacturerArr(Storage* pStorage)
+{
+	printf("Every manufacturer in storage:\n");
+	generalArrFunction(pStorage->manArray, pStorage->numOfManufacturers, sizeof(Manufacturer*), printManufacturer);
+}
+
 DeliveryCompany* findDeliveryCompanyByRegion(DeliveryCompany* deliveryCompArr, int size, eRegionType region)
 {
 	DeliveryCompany* returnValue = NULL;
@@ -393,15 +428,8 @@ int assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery)
 
 void printStorage(Storage* pStorage)
 {
-	printf("Every product in storage:\n");
-	generalArrFunction(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), printProduct);
-
-	printf("Every delivery company in storage:\n");
-	generalArrFunction(pStorage->deliveryCompanyArr, pStorage->numOfDeliveryComp, sizeof(DeliveryCompany), printDeliveryCompany);
-
-	printf("Every delivery in storage:\n");
-	generalArrFunction(pStorage->deliveryArr, pStorage->numOfDeliveries, sizeof(Delivery*), printDelivery);
-
-	printf("Every manufacturer in storage:\n");
-	generalArrFunction(pStorage->manArray, pStorage->numOfManufacturers, sizeof(Manufacturer*), printManufacturer);
+	printProductArr(pStorage);
+	printDeliveryCompanyArr(pStorage);
+	printDeliveryArr(pStorage);
+	printManufacturerArr(pStorage);
 }
