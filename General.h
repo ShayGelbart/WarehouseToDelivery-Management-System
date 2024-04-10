@@ -10,6 +10,7 @@ char* myGets(char* buffer, int size);
 char* getDynStr(char* str);
 char** splitCharsToWords(char* str, int* pCount, int* pTotalLength);
 int generateRandom(int upperBorder, int lowerBorder);
+void generalArrFunction(void* arr, int numOfElements, int size, void(*func)(void* element));
 
 
 

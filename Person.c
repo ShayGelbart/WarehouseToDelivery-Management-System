@@ -60,8 +60,8 @@ int	writePersonToTextFile(FILE* fp, Person* pPerson)
 
 int writePersonToBinaryFile(FILE* fp, Person* pPerson)
 {
-    int len = strlen(pPerson->name) + 1;
-    if (fwrite(len, sizeof(int), 1, fp) != 1)
+    int len = (int)strlen(pPerson->name) + 1;
+    if (fwrite(&len, sizeof(int), 1, fp) != 1)
         return 0;
     if (fwrite(&pPerson->name, sizeof(char), len, fp) != len)
         return 0;

@@ -79,3 +79,13 @@ int generateRandom(int upperBorder, int lowerBorder)
 {
 	return ((rand() % (upperBorder - lowerBorder + 1)) + lowerBorder);
 }
+
+void generalArrFunction(void* arr, int numOfElements, int size, void(*func)(void* element))
+{
+	char* currentElement = (char*)arr;
+
+	for (int i = 0; i < numOfElements; ++i) {
+		func(currentElement);
+		currentElement += size;
+	}
+}
