@@ -46,11 +46,12 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 {
 	int lenName, temp;
-	if(fread(lenName, sizeof(int), 1, fp) != 1)
+	if(fread(&lenName, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pDelComp->name, sizeof(char), lenName, fp) != lenName)
+	if (fread(pDelComp->name, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
 		return 0;
-	if (fread(pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
+	pDelComp->name[lenName - 1] = '\0';
+	if (fread(&pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
 		return 0;
 
 	pDelComp->delPerArray = (DeliveryPerson**)malloc(pDelComp->deliveryPersonCount * sizeof(DeliveryPerson*));
@@ -66,7 +67,7 @@ int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 			return 0;
 	}
 
-	if (fread(temp, sizeof(int), 1, fp) != 1)
+	if (fread(&temp, sizeof(int), 1, fp) != 1)
 		return 0;
 	pDelComp->region = (eRegionType)temp;
 	return 1;
@@ -86,19 +87,19 @@ int writeDeliveryCompanyToTextFile(FILE* fp, DeliveryCompany* pDelComp)
 
 int writeDeliveryCompanyToBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 {
-	int lenName = strlen(pDelComp->name);
-	if (fwrite(lenName, sizeof(char), 1, fp) != 1)
+	int lenName = (int)strlen(pDelComp->name);
+	if (fwrite(&lenName, sizeof(char), 1, fp) != 1)
 		return 0;
 	if (fwrite(pDelComp->name, sizeof(char), lenName, fp) != lenName)
 		return 0;
-	if (fwrite(pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
+	if (fwrite(&pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
 		return 0;
 
 	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
 		if (!writeDeliveryPersonToBinaryFile(fp, pDelComp->delPerArray[i]))
 			return 0;
 
-	if (fwrite(pDelComp->region, "%d\n", pDelComp->region, fp) != 1)
+	if (fwrite(&pDelComp->region, sizeof(int), 1, fp) != 1)
 		return 0;
 	return 1;
 }

@@ -25,6 +25,32 @@ void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufactur
 	pProduct->nameOfProduct = getStrExactName("Enter the name of your product\n");
 }
 
+int initProductFromTextFile(FILE* fp, Product* pProduct)
+{
+	return 0;
+}
+
+int initProductFromBinaryFile(FILE* fp, Product* pProduct)
+{
+	return 0;
+}
+
+int writeProductToTextFile(FILE* fp, Product* pProduct)
+{
+	if (!writeManufacturerToTextFile(&pProduct->manufacturer, fp))
+		return 0;
+	fprintf(fp, "%d\n%s\n", pProduct->productType, pProduct->nameOfProduct);
+	
+}
+
+int writeProductToBinaryFile(FILE* fp, Product* pProduct)
+{
+	if(!writeManufacturerToBinFile(&pProduct->manufacturer, fp))
+		return 0;
+
+
+}
+
 eProductType getTypeProduct()
 {
 	int option;

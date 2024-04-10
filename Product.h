@@ -18,10 +18,14 @@ typedef struct
 	char* nameOfProduct;
 }Product;
 
-void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers);
-void printManufacturerByType(Manufacturer** manArray, eProductType productType);
-eProductType getTypeProduct();
-void printProduct(const Product* pProduct);
-int compareProducts(const Product* p1, const Product* p2);
+void			initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers);
+int				initProductFromTextFile(FILE* fp, Product* pProduct);
+int				initProductFromBinaryFile(FILE* fp, Product* pProduct);
+int				writeProductToTextFile(FILE* fp, Product* pProduct);
+int				writeProductToBinaryFile(FILE* fp, Product* pProduct);
+void			printManufacturerByType(Manufacturer** manArray, eProductType productType);
+eProductType	getTypeProduct();
+void			printProduct(const Product* pProduct);
+int				compareProducts(const Product* p1, const Product* p2);
 
 #endif
