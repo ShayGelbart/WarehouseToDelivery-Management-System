@@ -383,8 +383,12 @@ int assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery)
 {
 	DeliveryCompany* temp = findDeliveryCompanyByRegion(pStorage->deliveryCompanyArr, pStorage->numOfDeliveryComp, pDelivery->customer->address.region);
 	if (temp == NULL)
+	{
 		printf("Error, no existing delivery company in the specified region. Try adding a new one\n");
+		return 0;
+	}
 	pDelivery->deliveryCompany = temp;
+	return 1;
 }
 
 void printStorage(Storage* pStorage)

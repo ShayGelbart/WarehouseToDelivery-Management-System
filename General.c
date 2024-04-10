@@ -63,7 +63,10 @@ char** splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 	word = strtok(temp, delimiters);
 	while (word != NULL)
 	{
-		wordsArray = (char**)realloc(wordsArray, (count + 1) * sizeof(char*));
+		char** temp = (char**)realloc(wordsArray, (count + 1) * sizeof(char*));
+		if (!temp)
+			return 0;
+		wordsArray = temp;
 		if (!wordsArray)
 			return 0;
 		wordsArray[count] = getDynStr(word);
