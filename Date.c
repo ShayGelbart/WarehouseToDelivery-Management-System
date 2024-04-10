@@ -45,6 +45,44 @@ int	 checkDate(char* date, Date* pDate)
 	return 1;
 }
 
+int initDateFromTextFile(FILE* fp, Date* pDate)
+{
+	if (fscanf(fp, "%d", &pDate->day) < 0)
+		return 0;
+	if (fscanf(fp, "%d", &pDate->month) < 0)
+		return 0;
+	if (fscanf(fp, "%d", &pDate->year) < 0)
+		return 0;
+	return 1;
+}
+
+int initDateFromBinaryFile(FILE* fp, Date* pDate)
+{
+	if (fread(&pDate->day, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(&pDate->month, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(&pDate->year, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
+}
+
+void writeDateToTextFile(FILE* fp, Date* pDate)
+{
+	fprintf(fp, "%d\n%d\n%d", pDate->day, pDate->month, pDate->year);
+}
+
+int writeDateToBinaryFile(FILE* fp, Date* pDate)
+{
+	if (fwrite(&pDate->day, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&pDate->month, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&pDate->year, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
+}
+
 void printDate(const Date* pDate)
 {
 	printf("Date: %d/%d/%d", pDate->day, pDate->month, pDate->year);

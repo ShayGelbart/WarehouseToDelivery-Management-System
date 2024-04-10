@@ -1,15 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "DeliveryCompany.h"
 #include "DeliveryPerson.h"
 #include "General.h"
 
-void initDeliveryCompany(DeliveryCompany* delComp)
+void initDeliveryCompany(DeliveryCompany* pDelComp)
 {
-	delComp->name = getStrExactName("Enter Name:\n");
-	delComp->delPerArray = NULL;
-	delComp->deliveryPersonCount = 0;
-	delComp->region = getRegion();
+	pDelComp->name = getStrExactName("Enter Name:\n");
+	pDelComp->delPerArray = NULL;
+	pDelComp->deliveryPersonCount = 0;
+	pDelComp->region = getRegion();
+}
+
+int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
+{
+	int temp;
+	char name[MAX_STR_LEN] = { 0 };
+	if (fgets(name, MAX_STR_LEN, fp) == NULL)
+		return 0;
+	name[strlen(name) - 1] = '\0';
+
+	if (fscanf(fp, "%d", &pDelComp->deliveryPersonCount) < 0)
+		return 0;
+
+	pDelComp->delPerArray = (DeliveryPerson**)malloc(pDelComp->deliveryPersonCount * sizeof(DeliveryPerson*));
+	if (!pDelComp->delPerArray)
+		return 0;
+
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+	{
+		pDelComp->delPerArray[i] = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+		if (!pDelComp->delPerArray[i])
+			return 0;
+		if (!initDeliveryPersonFromTextFile(fp, pDelComp->delPerArray[i]))
+			return 0;
+	}
+
+	if (fscanf(fp, "%d", &temp))
+		return 0;
+	pDelComp->region = (eRegionType)temp;
+	return 1;
+}
+
+int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
+{
+	return 0;
+}
+
+int writeDeliveryCompanyToTextFile(FILE* fp, DeliveryCompany* pDelComp)
+{
+	fprintf(fp, "%s\n%d\n", pDelComp->name, pDelComp->deliveryPersonCount);
+
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+		if (!writeDeliveryPersonToTextFile(fp, pDelComp->delPerArray[i]))
+			return 0;
+
+	fprintf(fp, "%d\n", pDelComp->region);
+	return 1;
+}
+
+int writeDeliveryCompanyToBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
+{
+	int lenName = strlen(pDelComp->name);
+	if (fwrite(lenName, sizeof(char), 1, fp) != 1)
+		return 0;
+	if (fwrite(pDelComp->name, sizeof(char), lenName, fp) != lenName)
+		return 0;
+	if (fwrite(pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
+		return 0;
+
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+		if (!writeDeliveryPersonToBinaryFile(fp, pDelComp->delPerArray[i]))
+			return 0;
+	return 1;
 }
 
 int	addDeliveryPerson(DeliveryCompany* pDelComp)
