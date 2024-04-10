@@ -45,7 +45,31 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 
 int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 {
-	return 0;
+	int lenName, temp;
+	if(fread(lenName, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pDelComp->name, sizeof(char), lenName, fp) != lenName)
+		return 0;
+	if (fread(pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
+		return 0;
+
+	pDelComp->delPerArray = (DeliveryPerson**)malloc(pDelComp->deliveryPersonCount * sizeof(DeliveryPerson*));
+	if (!pDelComp->delPerArray)
+		return 0;
+
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+	{
+		pDelComp->delPerArray[i] = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+		if (!pDelComp->delPerArray[i])
+			return 0;
+		if (!initDeliveryPersonFromBinaryFile(fp, pDelComp->delPerArray[i]))
+			return 0;
+	}
+
+	if (fread(temp, sizeof(int), 1, fp) != 1)
+		return 0;
+	pDelComp->region = (eRegionType)temp;
+	return 1;
 }
 
 int writeDeliveryCompanyToTextFile(FILE* fp, DeliveryCompany* pDelComp)
@@ -73,6 +97,9 @@ int writeDeliveryCompanyToBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
 		if (!writeDeliveryPersonToBinaryFile(fp, pDelComp->delPerArray[i]))
 			return 0;
+
+	if (fwrite(pDelComp->region, "%d\n", pDelComp->region, fp) != 1)
+		return 0;
 	return 1;
 }
 
