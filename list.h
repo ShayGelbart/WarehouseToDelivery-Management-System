@@ -25,7 +25,7 @@ BOOL L_init(LIST* pList);// create new list
 
 int L_length(LIST* pList);
 
-NODE* L_insert(NODE* pNode, DATA value, int(*compare)(const void*, const void*));	// add new node after *pNode
+NODE* L_insert(NODE* pNode, DATA value);	// add new node after *pNode
 
 BOOL L_delete(NODE* pNode, void(*freeKey)(void*));					// erase node after *pNode
 
