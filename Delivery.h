@@ -19,7 +19,11 @@ typedef struct
 	DeliveryPerson* deliveryPerson;
 }Delivery;
 
-int		initDelivery(Delivery* pDelivery);
+int			initDelivery(Delivery* pDelivery);
+int			readDeliveryFromTextFile(FILE* fp, Delivery* pDel);
+int			writeDeliveryToTextFile(FILE* fp, Delivery* pDel);
+int			readDeliveryFromBinaryFile(FILE* fp, Delivery* pDel);
+int			writeDeliveryToBinaryFile(FILE* fp, Delivery* pDel);
 void		printDelivery(Delivery* pDelivery);
 void		changeDeliveryDate(Delivery* pDelivery);
 void		changeProduct(Delivery* pDelivery, Product* pProduct1, Product* pProduct2);
