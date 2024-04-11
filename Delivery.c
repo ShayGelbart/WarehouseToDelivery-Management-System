@@ -38,11 +38,6 @@ int readDeliveryFromTextFile(FILE* fp, Delivery* pDel)
 	initDateFromTextFile(fp, &pDel->deliveryDate);
 	if (!initDeliveryCompanyFromTextFile(fp, pDel->deliveryCompany))
 		return 0;
-	if (!initDeliveryPersonFromTextFile(fp, pDel->deliveryPerson))
-		return 0;
-
-
-
 	return 1;
 }
 

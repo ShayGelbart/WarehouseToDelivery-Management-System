@@ -96,4 +96,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Storage.txt.txt" />
+  </ItemGroup>
 </Project>

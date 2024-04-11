@@ -18,9 +18,7 @@ int initProductFromTextFile(FILE* fp, Product* pProduct)
 	if(!readManufacturerFromTextFile( &pProduct->manufacturer, fp))
 	return 0;
 	
-	if (fscanf(fp, "%d", &temp))
-		return 0;
-	pProduct->productType = (eProductType)temp;
+	pProduct->productType = pProduct->manufacturer.type;
 
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;

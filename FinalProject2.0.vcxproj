@@ -157,6 +157,9 @@
     <ClCompile Include="Product.c" />
     <ClCompile Include="Storage.c" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Storage.txt.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

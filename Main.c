@@ -3,7 +3,7 @@
 #include "Storage.h"
 
 #define EXIT -1
-
+#define READ_TXT "Storage.txt"
 int menu();
 
 typedef enum
@@ -26,7 +26,7 @@ int main()
 		switch (option)
 		{
 		case eUploadSystem:
-			uploadSystemFromFile("CHANGE_LATER", &storage);
+			uploadSystemFromFile(READ_TXT, &storage);
 			break;
 		case ePrintSystem:
 			printStorage(&storage);

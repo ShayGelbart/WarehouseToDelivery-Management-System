@@ -307,7 +307,7 @@ void uploadSystemFromFile(char* fileName, Storage* pStorage)
 	if (choice == 0)
 		initStorageFromTextFile(fileName, pStorage);
 	else
-		initStorageFromBinaryFile(fileName, pStorage);
+		initStorageFromBinaryFile("CHANGE LATER", pStorage);
 }
 
 int addProductToStorage(Storage* pStorage)
