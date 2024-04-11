@@ -5,10 +5,8 @@
 
 void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers)
 {
+	pProduct->nameOfProduct = getStrExactName("Enter the name of your product");
 	pProduct->productType = getTypeProduct();
-	if (assignExistingManufacturerByType(manArray, numOfManufacturers, pProduct->productType) == NULL)
-		initManufacturer(&pProduct->manufacturer, manArray, numOfManufacturers);
-	pProduct->nameOfProduct = getStrExactName("Enter the name of your product\n");
 }
 
 int initProductFromTextFile(FILE* fp, Product* pProduct)

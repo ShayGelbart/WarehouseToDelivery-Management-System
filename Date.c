@@ -85,7 +85,7 @@ int writeDateToBinaryFile(FILE* fp, Date* pDate)
 
 void printDate(const Date* pDate)
 {
-	printf("Date: %d/%d/%d", pDate->day, pDate->month, pDate->year);
+	printf("Date: %d/%d/%d\t\t", pDate->day, pDate->month, pDate->year);
 }
 
 

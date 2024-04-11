@@ -5,7 +5,7 @@
 
 void initManufacturer(Manufacturer* pMan, Manufacturer** manArray, int numOfManufacturers)
 {
-	printf("Enter manufacturer name");
+	printf("Enter manufacturer name\n");
 	myGets(pMan->name, MAX_STR_LEN);
 
 	do
@@ -118,22 +118,20 @@ Manufacturer* assignExistingManufacturerByType(Manufacturer** manArray, int size
 	Manufacturer** temp = (Manufacturer**)malloc(sizeof(Manufacturer*) * size);
 	IF_NULL_RETURN_ZERO(temp)
 	
-	generalArrFunction(manArray, size, sizeof(Manufacturer*), printManufacturer);
+	for (int i = 0; i < size; i++)
+		if (manArray[i]->type == productType)
+		{
+			temp[pointer] = manArray[i];
+			pointer++;
+		}
+
+	generalArrFunction(temp, pointer, sizeof(Manufacturer*), printManufacturer);
 	printf("Does your manufacturer exist in the list above?\n");
 	printf("Yes - enter 1\nNo - enter 0\n");
 	scanf("%d", &isExist);
 	if (isExist)
 	{
-		for (int i = 0; i < size; i++)
-			if (manArray[i]->type == productType)
-			{
-				temp[pointer] = manArray[i];
-				pointer++;
-			}
-
 		do {
-			generalArrFunction(temp, pointer, sizeof(Manufacturer*), printManufacturer);
-
 			printf("Pick a manufacturer by ID\n");
 			scanf("%d", &manId);
 		} while (manId < 0 || !findManufacturerById(manId, temp, pointer));
@@ -148,5 +146,5 @@ Manufacturer* assignExistingManufacturerByType(Manufacturer** manArray, int size
 void printManufacturer(Manufacturer** ppMan)
 {
 	Manufacturer* pMan = *ppMan;
-	printf("Manufacturer:\nName: %s\tID: %d\n", pMan->name, pMan->id);
+	printf("Manufacturer:\nName: %s\tID: %d\tProduct type: %s", pMan->name, pMan->id, productTypeStr[pMan->type]);
 }

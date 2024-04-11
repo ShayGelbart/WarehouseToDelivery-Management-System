@@ -140,6 +140,5 @@ int L_print(LIST* pList, void(*print)(const void*))
 	printf("\n");
 	for (; tmp; tmp = tmp->next, c++)
 		print(tmp->key);
-	printf("\n");
 	return c;
 }

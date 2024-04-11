@@ -325,6 +325,12 @@ int addProductToStorage(Storage* pStorage)
 	pStorage->productArr = temp;
 
 	initProduct(newProduct, pStorage->manArray, pStorage->numOfManufacturers);
+	if (assignExistingManufacturerByType(pStorage->manArray, pStorage->numOfManufacturers, newProduct->productType) == NULL) // if couldn't find manufacturer from the man array
+	{
+		if (!addManufacturer(pStorage)) // add new manufacturer
+			return 0;
+		newProduct->manufacturer = *pStorage->manArray[pStorage->numOfManufacturers - 1]; // pull the new manufacturer
+	}
 	pStorage->productArr[pStorage->numOfProducts] = newProduct;
 	pStorage->numOfProducts++;
 	return 1;
@@ -374,7 +380,7 @@ int addManufacturer(Storage* pStorage)
 
 	initManufacturer(newMan, pStorage->manArray, pStorage->numOfManufacturers);
 	pStorage->manArray[pStorage->numOfManufacturers] = newMan;
-	pStorage->manArray++;
+	pStorage->numOfManufacturers++;
 	return 1;
 }
 
@@ -546,7 +552,10 @@ void menuPrintSpecificElement(Storage* pStorage)
 void printStorage(Storage* pStorage)
 {
 	printProductArr(pStorage);
+	printf("\n");
 	printDeliveryCompanyArr(pStorage);
+	printf("\n");
 	printDeliveryArr(pStorage);
+	printf("\n");
 	printManufacturerArr(pStorage);
 }
