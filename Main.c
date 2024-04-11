@@ -8,11 +8,11 @@ int menu();
 
 typedef enum
 {
-	eUploadSystem, ePrintSystem, eAddElements, eProductSort, eFindProduct,
+	eUploadSystem, ePrintSystem, eAddElements, ePrintSpecificElement ,eProductSort, eFindProduct,
 	eCreative1, eCreative2, eNofOptions
 } eMenuOptions;
 
-const char* str[eNofOptions] = { "Upload System","Print System","Product Sort",
+const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific Element", "Product Sort",
 								"Find Product", "Print all Airports",
 								"Print all flights with plane type" };
 
@@ -26,37 +26,29 @@ int main()
 		option = menu();
 		switch (option)
 		{
-		case 1:
-			
+		case eUploadSystem:
+			uploadSystemFromFile("CHANGE_LATER", &storage);
 			break;
-
-		case 2:
+		case ePrintSystem:
 			printStorage(&storage);
 			break;
-
-		case 3:
+		case eAddElements:
+			menuPrintSpecificElement(&storage);
+			break;
+		case ePrintSpecificElement:
+			addSpecificElement(&storage);
+			break;
+		case eProductSort:
 			
 			break;
-
-		case 4:
-		
-			break;
-
-		case 5:
+		case eFindProduct:
 			
 			break;
-
-		case 6:
+		case eCreative1:
 			
 			break;
-
-		case 7:
-			
+		case eCreative2:
 			break;
-
-		case 8:
-			break;
-
 		case EXIT:
 			printf("Bye bye\n");
 			stop = 1;

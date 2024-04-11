@@ -381,6 +381,31 @@ int addManufacturer(Storage* pStorage)
 	return 1;
 }
 
+void addSpecificElement(Storage* pStorage)
+{
+	int choice;
+	do {
+		printf("Enter which element to add:\n1.Product\n2.Delivery company\n3.Delivery\n4.Manufacturer\n");
+		scanf("%d", &choice);
+	} while (choice < 1 || choice > 4);
+
+	switch (choice)
+	{
+	case 1:
+		addProductToStorage(pStorage);
+		break;
+	case 2:
+		addDeliveryCompany(pStorage);
+		break;
+	case 3:
+		addDelivery(pStorage);
+		break;
+	case 4:
+		addManufacturer(pStorage);
+		break;
+	}
+}
+
 void printProductArr(Storage* pStorage)
 {
 	printf("Every product in storage:\n");
@@ -424,6 +449,31 @@ int assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery)
 	}
 	pDelivery->deliveryCompany = temp;
 	return 1;
+}
+
+void menuPrintSpecificElement(Storage* pStorage)
+{
+	int choice;
+	do {
+		printf("Enter:\n1.Product array\n2.Delivery company array\n3.Delivery array\n4.Manufacturer array\n");
+		scanf("%d", &choice);
+	} while (choice < 1 || choice > 4);
+	
+	switch (choice)
+	{
+	case 1:
+		printProductArr(pStorage);
+		break;
+	case 2:
+		printDeliveryCompanyArr(pStorage);
+		break;
+	case 3:
+		printDeliveryArr(pStorage);
+		break;
+	case 4:
+		printManufacturerArr(pStorage);
+		break;
+	}
 }
 
 void printStorage(Storage* pStorage)
