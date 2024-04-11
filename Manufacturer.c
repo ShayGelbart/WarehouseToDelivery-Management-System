@@ -146,5 +146,5 @@ Manufacturer* assignExistingManufacturerByType(Manufacturer** manArray, int size
 void printManufacturer(Manufacturer** ppMan)
 {
 	Manufacturer* pMan = *ppMan;
-	printf("Manufacturer:\nName: %s\tID: %d\tProduct type: %s\n", pMan->name, pMan->id, productTypeStr[pMan->type]);
+	printf("Manufacturer:\nName: %s\tID: %d\t\tProduct type: %s\n", pMan->name, pMan->id, productTypeStr[pMan->type]);
 }

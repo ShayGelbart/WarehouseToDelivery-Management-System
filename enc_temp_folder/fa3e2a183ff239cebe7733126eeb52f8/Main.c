@@ -13,7 +13,7 @@ typedef enum
 } eMenuOptions;
 
 const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific Element", "Add Elements",  "Product Sort",
-								"Find Product", "Creative1", "Creative2" };
+								"eFindProduct", "Creative1", "Creative2" };
 
 
 int main()

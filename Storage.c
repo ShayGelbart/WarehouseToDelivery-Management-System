@@ -317,23 +317,23 @@ int addProductToStorage(Storage* pStorage)
 	Product* newProduct = (Product*)malloc(sizeof(Product));
 	IF_NULL_RETURN_ZERO(newProduct)
 
-	Product** temp = (Product**)realloc(pStorage->productArr, (pStorage->numOfProducts + 1) * sizeof(Product*));
-	if (!temp)
+	Product** tempArr = (Product**)realloc(pStorage->productArr, (pStorage->numOfProducts + 1) * sizeof(Product*));
+	if (!tempArr)
 	{
 		FREE_RETURN_ZERO(newProduct)
 	}
-	pStorage->productArr = temp;
+	pStorage->productArr = tempArr;
 
 	initProduct(newProduct, pStorage->manArray, pStorage->numOfManufacturers);
-	Manufacturer* temp = assignExistingManufacturerByType(pStorage->manArray, pStorage->numOfManufacturers, newProduct->productType);
-	if (temp == NULL) // if couldn't find manufacturer from the man array
+	Manufacturer* tempMan = assignExistingManufacturerByType(pStorage->manArray, pStorage->numOfManufacturers, newProduct->productType);
+	if (tempMan == NULL) // if couldn't find manufacturer from the man array
 	{
 		if (!addManufacturer(pStorage)) // add new manufacturer
 			return 0;
 		newProduct->manufacturer = *pStorage->manArray[pStorage->numOfManufacturers - 1]; // pull the new manufacturer
 	}
 	else
-		newProduct->manufacturer = *temp;
+		newProduct->manufacturer = *tempMan;
 	pStorage->productArr[pStorage->numOfProducts] = newProduct;
 	pStorage->numOfProducts++;
 	return 1;
