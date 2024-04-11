@@ -5,7 +5,7 @@
 #define MAX_STR_LEN 255
 
 #define FREE_RETURN_ZERO(object) {free(object); return 0;}
-#define IF_NULL_RETURN_ZERO(object) {if(!object) return 0;}
+#define IF_NULL_RETURN_ZERO(object) {if(!object) {return 0;}}
 
 typedef enum {
 	eToys, eBooks, eElectronics, eSports, eFurniture, eClothing, eBeauty, eNofProductTypes

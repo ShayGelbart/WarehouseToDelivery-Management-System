@@ -21,6 +21,7 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 {
 	int temp;
 	char name[MAX_STR_LEN] = { 0 };
+	fgetc(fp);
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';
@@ -42,7 +43,7 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 			return 0;
 	}
 
-	if (fscanf(fp, "%d", &temp))
+	if (fscanf(fp, "%d", &temp) < 0)
 		return 0;
 	pDelComp->region = (eRegionType)temp;
 	return 1;
@@ -177,11 +178,11 @@ int	compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson* p2)
 
 void printDeliveryPersonArrayWithIndex(DeliveryCompany* pDelComp)
 {
+
 	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
 	{
 		printf("%d)", (i + 1));
 		printDeliveryPerson(pDelComp->delPerArray[i]);
-		printf("\n");
 	}
 }
 

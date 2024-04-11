@@ -17,6 +17,7 @@ void initDeliveryPerson(DeliveryPerson* pDelPer)
 
 int	initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
 {
+	pDelPer->person = (Person*)malloc(sizeof(Person));
 	if(!initPersonFromTextFile(fp, pDelPer->person))
 		return 0;
 	if (fscanf(fp, "%d", &pDelPer->numOfDeliveries) < 0)
@@ -126,5 +127,5 @@ double calcAverageRating(DeliveryPerson* pDelPer)
 void printDeliveryPerson(DeliveryPerson* pDelPer)
 {
 	printPerson(pDelPer->person);
-	printf("Number of successful deliveries: %d\tAverage rating by %d customers: %lf\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->deliveryTime);
+	printf("Number of deliveries: %d\tAverage rating: %.2f(%d)\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->numOfDeliveries, pDelPer->deliveryTime);
 }

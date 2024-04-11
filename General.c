@@ -88,6 +88,7 @@ void generalArrFunction(void* arr, int numOfElements, int size, void(*func)(void
 	char* currentElement = (char*)arr;
 
 	for (int i = 0; i < numOfElements; ++i) {
+		printf("%d) ", (i + 1));
 		func(currentElement);
 		currentElement += size;
 	}

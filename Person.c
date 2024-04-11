@@ -27,10 +27,12 @@ void initPerson(Person* pPerson)
 int initPersonFromTextFile(FILE* fp,Person* pPerson)
 {
     char name[MAX_STR_LEN] = { 0 };
+    fgetc(fp);
     if (fgets(name, MAX_STR_LEN, fp) == NULL)
         return 0;
+    //pPerson->name = (char*)malloc((strlen(name) + 1) * sizeof(char));
+    //IF_NULL_RETURN_ZERO(pPerson->name)
     name[strlen(name) - 1] = '\0';
-    
     pPerson->name = _strdup(name);
     
     if (!pPerson->name)
@@ -70,5 +72,5 @@ int writePersonToBinaryFile(FILE* fp, Person* pPerson)
 
 void printPerson(Person* pPerson)
 {
-    printf("Name: %s\n", pPerson->name);
+    printf("Name: %s\t", pPerson->name);
 }

@@ -20,6 +20,6 @@ int				writeManufacturerToBinFile(Manufacturer* pMan, FILE* fp);
 int				findManufacturerById(int id, Manufacturer** manArray, int numOfManufacturers);
 Manufacturer*	returnManufacturerById(int id, Manufacturer** manArray, int numOfManufacturers);
 Manufacturer*	assignExistingManufacturerByType(Manufacturer** manArray, int size, eProductType productType);
-void			printManufacturer(Manufacturer* pMan);
+void			printManufacturer(Manufacturer** ppMan);
 
 #endif

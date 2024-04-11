@@ -19,7 +19,19 @@ int initDelivery(Delivery* pDelivery)
 
 int readDeliveryFromTextFile(FILE* fp, Delivery* pDel)
 {
+	pDel->customer = (Customer*)malloc(sizeof(Customer));
+	IF_NULL_RETURN_ZERO(pDel->customer)
 
+	pDel->products = (LIST*)malloc(sizeof(LIST));
+	IF_NULL_RETURN_ZERO(pDel->products)
+
+	pDel->deliveryCompany = (DeliveryCompany*)malloc(sizeof(DeliveryCompany));
+	IF_NULL_RETURN_ZERO(pDel->deliveryCompany)
+
+	pDel->deliveryPerson = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+	IF_NULL_RETURN_ZERO(pDel->deliveryPerson)
+	if (!L_init(pDel->products))
+		return 0;
 	if (!initCustomerFromTextFile(fp, pDel->customer))
 		return 0;
 	if (fscanf(fp, "%d", &pDel->numberOfProducts) < 0)
@@ -37,6 +49,8 @@ int readDeliveryFromTextFile(FILE* fp, Delivery* pDel)
 	}
 	initDateFromTextFile(fp, &pDel->deliveryDate);
 	if (!initDeliveryCompanyFromTextFile(fp, pDel->deliveryCompany))
+		return 0;
+	if (!initDeliveryPersonFromTextFile(fp, pDel->deliveryPerson))
 		return 0;
 	return 1;
 }
@@ -149,8 +163,9 @@ void changeRatingWhenDelivered(Delivery* pDelivery)
 	changeRating(pDelivery->deliveryPerson, rating);
 }
 
-void printDelivery(Delivery* pDelivery)
+void printDelivery(Delivery** ppDelivery)
 {
+	Delivery* pDelivery = *ppDelivery;
 	printCustomer(pDelivery->customer);
 	printf("Number of products %d", pDelivery->numberOfProducts);
 	L_print(pDelivery->products, printProduct);

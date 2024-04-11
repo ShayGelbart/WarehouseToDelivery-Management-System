@@ -41,7 +41,7 @@ int initAddressFromTextFile(FILE* fp, Address* pAddress)
 	pAddress->region = (eRegionType)temp;
 	char city[MAX_STR_LEN] = { 0 };
 	char street[MAX_STR_LEN] = { 0 };
-
+	fgetc(fp);
 	if (fgets(city, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	city[strlen(city) - 1] = '\0';

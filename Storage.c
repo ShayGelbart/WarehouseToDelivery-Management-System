@@ -109,6 +109,7 @@ int initStorageFromTextFile(char* fileName, Storage* pStorage)
 			CLOSE_RETURN_ZERO(fp)
 		}
 	}
+	fclose(fp);
 	return 1;
 }
 
@@ -206,6 +207,7 @@ int initStorageFromBinaryFile(char* fileName, Storage* pStorage)
 			CLOSE_RETURN_ZERO(fp)
 		}
 	}
+	fclose(fp);
 	return 1;
 }
 
@@ -295,14 +297,14 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
-
+	fclose(fp);
 	return 1;
 }
 
 void uploadSystemFromFile(char* fileName, Storage* pStorage)
 {
 	int choice;
-	printf("Choose the kind of file to upload the system from:\nText - Enter 0\nBinary - Enter 1");
+	printf("Choose the kind of file to upload the system from:\nText - Enter 0\nBinary - Enter 1\n");
 	scanf("%d", &choice);
 	if (choice == 0)
 		initStorageFromTextFile(fileName, pStorage);
@@ -474,7 +476,7 @@ void bsearchProductArray(Storage* pStorage)
 void printProductArr(Storage* pStorage)
 {
 	printf("Every product in storage:\n");
-	generalArrFunction(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), printProduct);
+	generalArrFunction(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), printProductGeneral);
 }
 
 void printDeliveryCompanyArr(Storage* pStorage)

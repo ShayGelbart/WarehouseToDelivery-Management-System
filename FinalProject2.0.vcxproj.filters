@@ -97,6 +97,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Storage.txt.txt" />
+    <Text Include="Storage.txt" />
   </ItemGroup>
 </Project>

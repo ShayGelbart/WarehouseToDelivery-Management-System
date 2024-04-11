@@ -35,16 +35,17 @@ int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp)
 {
 	char name[MAX_STR_LEN] = { 0 };
 	int id = 0, temp;
-
+	fgetc(fp);
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';
 
-	fscanf(fp, "%d", &id);
+	if (fscanf(fp, "%d", &pMan->id) < 0)
+		return 0;
 
 	strcpy(pMan->name, name);
 
-	if (fscanf(fp, "%d", &temp))
+	if (fscanf(fp, "%d", &temp) < 0)
 		return 0;
 	pMan->type = (eProductType)temp;
 	return 1;
@@ -144,7 +145,8 @@ Manufacturer* assignExistingManufacturerByType(Manufacturer** manArray, int size
 	return NULL;
 }
 
-void printManufacturer(Manufacturer* pMan)
+void printManufacturer(Manufacturer** ppMan)
 {
+	Manufacturer* pMan = *ppMan;
 	printf("Manufacturer:\nName: %s\tID: %d\n", pMan->name, pMan->id);
 }

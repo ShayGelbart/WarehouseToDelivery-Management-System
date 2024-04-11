@@ -19,7 +19,7 @@ int initProductFromTextFile(FILE* fp, Product* pProduct)
 	return 0;
 	
 	pProduct->productType = pProduct->manufacturer.type;
-
+	fgetc(fp);
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';
@@ -93,7 +93,13 @@ int compareProductsByProductType(const void* v1, const void* v2)
 
 void printProduct(const Product* pProduct)
 {
-	printf("Name of product: %s\nType of product: %s\tManufacturer: %s\t", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
+	printf("Name of product: %s\tType of product: %s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
+}
+
+void printProductGeneral(const Product** ppProduct)
+{
+	Product* pProduct = *ppProduct;
+	printf("Name of product: %s\tType of product: %s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
 }
 
 
