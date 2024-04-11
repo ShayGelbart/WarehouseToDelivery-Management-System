@@ -131,7 +131,7 @@ void changeProduct(Delivery* pDelivery, Product* pProduct1, Product* pProduct2)
 
 int removeProduct(Delivery* pDelivery, Product* pProduct)
 {
-	NODE* temp = L_find(&pDelivery->products->head, pProduct, compareProducts);
+	NODE* temp = L_find(&pDelivery->products->head, pProduct, compareProductsByName);
 	if (!L_delete(temp, NULL))
 		return 0;
 	return 1;

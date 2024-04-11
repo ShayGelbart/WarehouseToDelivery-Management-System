@@ -12,12 +12,29 @@ void initManufacturer(Manufacturer* pMan, Manufacturer** manArray, int numOfManu
 	{
 		printf("Enter your id\n");
 		scanf("%d", &pMan->id);
-	} while (pMan->id <= 0 || findManufacturersById(pMan, manArray, numOfManufacturers));
+	} while (pMan->id <= 0 || findManufacturerById(pMan->id, manArray, numOfManufacturers));
+
+	pMan->type = getTypeProduct();
 }
+
+eProductType getTypeProduct()
+{
+	int option;
+	printf("\n\n");
+	do {
+		printf("Please enter one of the following types\n");
+		for (int i = 0; i < eNofProductTypes; i++)
+			printf("%d for %s\n", i, productTypeStr[i]);
+		scanf("%d", &option);
+	} while (option < 0 || option >= eNofProductTypes);
+	getchar();
+	return (eProductType)option;
+}
+
 int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp)
 {
 	char name[MAX_STR_LEN] = { 0 };
-	int id = 0;
+	int id = 0, temp;
 
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
@@ -26,21 +43,23 @@ int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp)
 	fscanf(fp, "%d", &id);
 
 	strcpy(pMan->name, name);
+
+	if (fscanf(fp, "%d", &temp))
+		return 0;
+	pMan->type = (eProductType)temp;
 	return 1;
-
-
 }
 
 int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp)
 {
-	if (fprintf(fp, "%s\n%d\n", pMan->name, pMan->id) < 0)
+	if (fprintf(fp, "%s\n%d\n%d\n", pMan->name, pMan->id, pMan->type) < 0)
 		return 0;
 	return 1;
 }
 
 int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp)
 {
-	int len;
+	int len, temp;
 	if (fread(&len, sizeof(int), 1, fp) != 1)
 		return 0;
 
@@ -50,6 +69,10 @@ int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp)
 
 	if (fread(&pMan->id, sizeof(int), 1, fp) != 1)
 		return 0;
+
+	if (fread(&temp, sizeof(int), 1, fp) != 1)
+		return 0;
+	pMan->type = (eProductType)temp;
 	return 1;
 }
 
@@ -62,18 +85,63 @@ int  writeManufacturerToBinFile(Manufacturer* pMan, FILE* fp)
 		return 0;
 	if (fwrite(&pMan->id, sizeof(int), 1, fp) != 1)
 		return 0;
+	if (fwrite(&pMan->type, sizeof(eProductType), 1, fp) != 1)
+		return 0;
 	return 1;
 }
 
-int findManufacturersById(Manufacturer* pMan, Manufacturer** manArray, int numOfManufacturers)
+int findManufacturerById(int id, Manufacturer** manArray, int numOfManufacturers)
 {
 
 	for (int i = 0; i < numOfManufacturers; i++)
 	{
-		if (manArray[i]->id == pMan->id)
+		if (manArray[i]->id == id)
 			return 1;
 	}
 	return 0;
+}
+
+Manufacturer* returnManufacturerById(int id, Manufacturer** manArray, int numOfManufacturers)
+{
+	for (int i = 0; i < numOfManufacturers; i++)
+	{
+		if (manArray[i]->id == id)
+			return manArray[i];
+	}
+	return NULL;
+}
+
+Manufacturer* assignExistingManufacturerByType(Manufacturer** manArray, int size, eProductType productType)
+{
+	int pointer = 0, manId, isExist;
+	Manufacturer** temp = (Manufacturer**)malloc(sizeof(Manufacturer*) * size);
+	IF_NULL_RETURN_ZERO(temp)
+	
+	generalArrFunction(manArray, size, sizeof(Manufacturer*), printManufacturer);
+	printf("Does your manufacturer exist in the list above?\n");
+	printf("Yes - enter 1\nNo - enter 0\n");
+	scanf("%d", &isExist);
+	if (isExist)
+	{
+		for (int i = 0; i < size; i++)
+			if (manArray[i]->type == productType)
+			{
+				temp[pointer] = manArray[i];
+				pointer++;
+			}
+
+		do {
+			generalArrFunction(temp, pointer, sizeof(Manufacturer*), printManufacturer);
+
+			printf("Pick a manufacturer by ID\n");
+			scanf("%d", &manId);
+		} while (manId < 0 || !findManufacturerById(manId, temp, pointer));
+
+		free(temp);
+		return returnManufacturerById(manId, manArray, size);
+	}
+	
+	return NULL;
 }
 
 void printManufacturer(Manufacturer* pMan)

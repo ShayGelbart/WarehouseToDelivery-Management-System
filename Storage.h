@@ -31,6 +31,8 @@ int					addProductToStorage(Storage* pStorage);
 int					addDeliveryCompany(Storage* pStorage);
 int					addDelivery(Storage* pStorage);
 int					addManufacturer(Storage* pStorage);
+void				sortProductArray(Storage* pStorage);
+void				bsearchProductArray(Storage* pStorage);
 DeliveryCompany*	findDeliveryCompanyByRegion(DeliveryCompany* deliveryCompArr, int size, eRegionType region);
 int					assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery);
 void				menuPrintSpecificElement(Storage* pStorage);

@@ -313,14 +313,12 @@ void uploadSystemFromFile(char* fileName, Storage* pStorage)
 int addProductToStorage(Storage* pStorage)
 {
 	Product* newProduct = (Product*)malloc(sizeof(Product));
-	if (!newProduct)
-		return 0;
+	IF_NULL_RETURN_ZERO(newProduct)
 
 	Product** temp = (Product**)realloc(pStorage->productArr, (pStorage->numOfProducts + 1) * sizeof(Product*));
 	if (!temp)
 	{
-		free(newProduct);
-		return 0;
+		FREE_RETURN_ZERO(newProduct)
 	}
 	pStorage->productArr = temp;
 
@@ -333,8 +331,7 @@ int addProductToStorage(Storage* pStorage)
 int addDeliveryCompany(Storage* pStorage)
 {
 	DeliveryCompany* temp = (DeliveryCompany*)realloc(pStorage->deliveryCompanyArr, (pStorage->numOfDeliveryComp + 1) * sizeof(DeliveryCompany));
-	if (!temp)
-		return 0;
+	IF_NULL_RETURN_ZERO(temp)
 
 	pStorage->deliveryCompanyArr = temp;
 	if (!initDeliveryCompany(&pStorage->deliveryCompanyArr[pStorage->numOfDeliveryComp], pStorage->deliveryCompanyArr, pStorage->numOfDeliveryComp))
@@ -346,14 +343,12 @@ int addDeliveryCompany(Storage* pStorage)
 int addDelivery(Storage* pStorage)
 {
 	Delivery* newDelivery = (Delivery*)malloc(sizeof(Delivery));
-	if (!newDelivery)
-		return 0;
+	IF_NULL_RETURN_ZERO(newDelivery)
 
 	Delivery** temp = (Delivery**)realloc(pStorage->deliveryArr, (pStorage->numOfDeliveries + 1) * sizeof(Delivery*));
 	if (!temp)
 	{
-		free(newDelivery);
-		return 0;
+		FREE_RETURN_ZERO(newDelivery)
 	}
 	pStorage->deliveryArr = temp;
 	initDelivery(newDelivery);
@@ -366,14 +361,12 @@ int addDelivery(Storage* pStorage)
 int addManufacturer(Storage* pStorage)
 {
 	Manufacturer* newMan = (Manufacturer*)malloc(sizeof(Manufacturer));
-	if (!newMan)
-		return 0;
+	IF_NULL_RETURN_ZERO(newMan)
 
 	Manufacturer** temp = (Manufacturer**)realloc(pStorage->manArray, (pStorage->numOfManufacturers + 1) * sizeof(Manufacturer*));
 	if (!temp)
 	{
-		free(newMan);
-		return 0;
+		FREE_RETURN_ZERO(newMan)
 	}
 	pStorage->manArray = temp;
 
@@ -411,6 +404,71 @@ void addSpecificElement(Storage* pStorage)
 		printf("Error, unable to add\n");
 	else
 		printf("Successfully added\n");
+}
+
+void sortProductArray(Storage* pStorage)
+{
+	int choice, check = 0;
+	do {
+		printf("Enter in which order to sort:\nBy-\n1.Alphabetical order\n2.Product type\n3.Manufacturer ID\n");
+		scanf("%d", &choice);
+	} while (choice < 1 || choice > 3);
+
+	switch (choice)
+	{
+	case 1:
+		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByName);
+		printf("Product array now sorted by alphabetical order\n");
+		break;
+	case 2:
+		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByProductType);
+		printf("Product array now sorted by product type\n");
+		break;
+	case 3:
+		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareTwoProductsByManufacturerId);
+		printf("Product array now sorted by manufacturer id\n");
+		break;
+	}
+}
+
+void bsearchProductArray(Storage* pStorage)
+{
+	int choice, check = 0;
+	Product* key = (Product*)malloc(sizeof(Product));
+	Product* returnValue = NULL;
+	if (!key)
+	{
+		printf("Error, try again\n");
+		return;
+	}
+
+	do {
+		printf("Enter in which order to sort:\nBy-\n1.Alphabetical order\n2.Product type\n3.Manufacturer ID\n");
+		scanf("%d", &choice);
+	} while (choice < 1 || choice > 3);
+
+	switch (choice)
+	{
+	case 1:
+		key->nameOfProduct = getDynStr("Enter name of product\n");
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByName);
+		free(key->nameOfProduct);
+		break;
+	case 2:
+		key->productType = getTypeProduct();
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByProductType);
+		free(key->nameOfProduct);
+		break;
+	case 3:
+		initManufacturer(&key->manufacturer, pStorage->manArray, pStorage->numOfManufacturers);
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareTwoProductsByManufacturerId);
+		break;
+	}
+	free(key);
+	if (returnValue == NULL)
+		printf("Not found in Product array\n");
+	else
+		printf("Found in Product array\n");
 }
 
 void printProductArr(Storage* pStorage)

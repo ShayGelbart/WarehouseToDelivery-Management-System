@@ -14,6 +14,7 @@ int initDeliveryCompany(DeliveryCompany* pDelComp, DeliveryCompany* delCompArr, 
 	for (int i = 0; i < size; i++)
 		if (delCompArr[i].region = pDelComp->region)
 			return 0;
+	return 1;
 }
 
 int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)

@@ -8,13 +8,12 @@ int menu();
 
 typedef enum
 {
-	eUploadSystem, ePrintSystem, eAddElements, ePrintSpecificElement ,eProductSort, eFindProduct,
+	eUploadSystem, ePrintSystem, ePrintSpecificElement, eAddElements, eProductSort, eFindProduct,
 	eCreative1, eCreative2, eNofOptions
 } eMenuOptions;
 
-const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific Element", "Product Sort",
-								"Find Product", "Print all Airports",
-								"Print all flights with plane type" };
+const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific Element", "Add Elements",  "Product Sort",
+								"eFindProduct", "Creative1", "Creative2" };
 
 
 int main()
@@ -32,20 +31,20 @@ int main()
 		case ePrintSystem:
 			printStorage(&storage);
 			break;
-		case eAddElements:
+		case ePrintSpecificElement:
 			menuPrintSpecificElement(&storage);
 			break;
-		case ePrintSpecificElement:
+		case eAddElements:
 			addSpecificElement(&storage);
 			break;
 		case eProductSort:
-			
+			sortProductArray(&storage);
 			break;
 		case eFindProduct:
-			
+			bsearchProductArray(&storage);
 			break;
 		case eCreative1:
-			
+
 			break;
 		case eCreative2:
 			break;
