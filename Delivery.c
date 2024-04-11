@@ -11,7 +11,7 @@ int initDelivery(Delivery* pDelivery)
 		return 0;
 	pDelivery->numberOfProducts = 0;
 	getCorrectDate(&pDelivery->deliveryDate);
-	initDeliveryCompany(pDelivery->deliveryCompany);
+	pDelivery->deliveryCompany = NULL;
 	initDeliveryPerson(pDelivery->deliveryPerson);
 
 	return 1;
