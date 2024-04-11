@@ -97,7 +97,7 @@ void printProduct(const Product* pProduct)
 void printProductGeneral(const Product** ppProduct)
 {
 	Product* pProduct = *ppProduct;
-	printf("Name of product: %s\tType of product: %s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
+	printf("Name of product: %s\tType of product: %-12s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
 }
 
 
