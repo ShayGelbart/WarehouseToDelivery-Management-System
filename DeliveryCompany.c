@@ -5,13 +5,15 @@
 #include "DeliveryPerson.h"
 #include "General.h"
 
-void initDeliveryCompany(DeliveryCompany* pDelComp, DeliveryCompany* delCompArr, int size)
+int initDeliveryCompany(DeliveryCompany* pDelComp, DeliveryCompany* delCompArr, int size)
 {
 	pDelComp->name = getStrExactName("Enter Name:\n");
 	pDelComp->delPerArray = NULL;
 	pDelComp->deliveryPersonCount = 0;
 	pDelComp->region = getRegion();
-
+	for (int i = 0; i < size; i++)
+		if (delCompArr[i].region = pDelComp->region)
+			return 0;
 }
 
 int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)

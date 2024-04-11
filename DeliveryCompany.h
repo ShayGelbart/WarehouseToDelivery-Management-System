@@ -12,7 +12,7 @@ typedef struct
 	eRegionType region;
 }DeliveryCompany;
 
-void	initDeliveryCompany(DeliveryCompany* pDelComp);
+int		initDeliveryCompany(DeliveryCompany* pDelComp, DeliveryCompany* delCompArr, int size);
 int		initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp);
 int		initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp);
 int		writeDeliveryCompanyToTextFile(FILE* fp, DeliveryCompany* pDelComp);

@@ -337,7 +337,8 @@ int addDeliveryCompany(Storage* pStorage)
 		return 0;
 
 	pStorage->deliveryCompanyArr = temp;
-	initDeliveryCompany(&pStorage->deliveryCompanyArr[pStorage->numOfDeliveryComp]);
+	if (!initDeliveryCompany(&pStorage->deliveryCompanyArr[pStorage->numOfDeliveryComp]))
+		return 0;
 	pStorage->numOfDeliveryComp++;
 	return 1;
 }
@@ -383,7 +384,7 @@ int addManufacturer(Storage* pStorage)
 
 void addSpecificElement(Storage* pStorage)
 {
-	int choice;
+	int choice, check;
 	do {
 		printf("Enter which element to add:\n1.Product\n2.Delivery company\n3.Delivery\n4.Manufacturer\n");
 		scanf("%d", &choice);
@@ -392,18 +393,23 @@ void addSpecificElement(Storage* pStorage)
 	switch (choice)
 	{
 	case 1:
-		addProductToStorage(pStorage);
+		check = addProductToStorage(pStorage);
 		break;
 	case 2:
-		addDeliveryCompany(pStorage);
+		check = addDeliveryCompany(pStorage);
 		break;
 	case 3:
-		addDelivery(pStorage);
+		check = addDelivery(pStorage);
 		break;
 	case 4:
-		addManufacturer(pStorage);
+		check = addManufacturer(pStorage);
 		break;
 	}
+
+	if (!check)
+		printf("Error, unable to add\n");
+	else
+		printf("Successfully added\n");
 }
 
 void printProductArr(Storage* pStorage)
