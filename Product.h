@@ -18,8 +18,11 @@ int				initProductFromBinaryFile(FILE* fp, Product* pProduct);
 int				writeProductToTextFile(FILE* fp, Product* pProduct);
 int				writeProductToBinaryFile(FILE* fp, Product* pProduct);
 int				compareTwoProductsByManufacturerId(const void* v1, const void* v2);
+int				compareTwoProductsByManufacturerIdForFind(const void* v1, const void* v2);
 int				compareProductsByName(const void* v1, const void* v2);
+int				compareProductsByNameForFind(const void* v1, const void* v2);
 int				compareProductsByProductType(const void* v1, const void* v2);
+int				compareProductsByProductTypeForFind(const void* v1, const void* v2);
 void			printProduct(const Product* pProduct);
 void			printProductGeneral(const Product** ppProduct);
 

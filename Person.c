@@ -19,9 +19,7 @@
 
 void initPerson(Person* pPerson)
 {
-    printf("Enter Persons Name: \n");
-    myGets(pPerson->name, MAX_STR_LEN);
-    
+    pPerson->name = getStrExactName("Enter Persons Name:");    
 }
 
 int initPersonFromTextFile(FILE* fp,Person* pPerson)

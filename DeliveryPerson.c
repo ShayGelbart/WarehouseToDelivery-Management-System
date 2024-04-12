@@ -5,6 +5,8 @@
 
 void initDeliveryPerson(DeliveryPerson* pDelPer)
 {
+	pDelPer->person = (Person*)malloc(sizeof(Person));
+	IF_NULL_RETURN_ZERO(pDelPer->person)
 	initPerson(pDelPer->person);
 	pDelPer->ratingArr = NULL;
 	pDelPer->averageRating = 0;

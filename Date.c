@@ -69,7 +69,7 @@ int initDateFromBinaryFile(FILE* fp, Date* pDate)
 
 void writeDateToTextFile(FILE* fp, Date* pDate)
 {
-	fprintf(fp, "%d\n%d\n%d", pDate->day, pDate->month, pDate->year);
+	fprintf(fp, "%d\n%d\n%d\n", pDate->day, pDate->month, pDate->year);
 }
 
 int writeDateToBinaryFile(FILE* fp, Date* pDate)

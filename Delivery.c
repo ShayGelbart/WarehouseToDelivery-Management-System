@@ -5,7 +5,12 @@
 
 int initDelivery(Delivery* pDelivery)
 {
-
+	pDelivery->customer = (Customer*)malloc(sizeof(Customer));
+	IF_NULL_RETURN_ZERO(pDelivery->customer)
+	pDelivery->products = (LIST*)malloc(sizeof(LIST));
+	IF_NULL_RETURN_ZERO(pDelivery->products)
+	pDelivery->deliveryPerson = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+	IF_NULL_RETURN_ZERO(pDelivery->deliveryPerson)
 	initCustomer(pDelivery->customer);
 	if (!L_init(pDelivery->products))
 		return 0;
@@ -42,6 +47,7 @@ int readDeliveryFromTextFile(FILE* fp, Delivery* pDel)
 		Product* p1 = (Product*)malloc(sizeof(Product));
 		if (!p1)
 			return 0;
+		fgetc(fp);
 		if (!initProductFromTextFile(fp, p1))
 			return 0;
 		if (!L_insert(&pDel->products->head, p1))

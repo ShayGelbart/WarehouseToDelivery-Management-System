@@ -38,7 +38,8 @@ int initStorageFromTextFile(char* fileName, Storage* pStorage)
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
-		
+		if (i == 0)
+			fgetc(fp);
 		if (!initProductFromTextFile(fp, pStorage->productArr[i]))
 		{
 			CLOSE_RETURN_ZERO(fp)
@@ -103,7 +104,7 @@ int initStorageFromTextFile(char* fileName, Storage* pStorage)
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
-
+		fgetc(fp);
 		if (!readManufacturerFromTextFile(pStorage->manArray[i], fp))
 		{
 			CLOSE_RETURN_ZERO(fp)
@@ -363,7 +364,9 @@ int addDelivery(Storage* pStorage)
 	}
 	pStorage->deliveryArr = temp;
 	initDelivery(newDelivery);
-	assignDeliveryCompany(pStorage, newDelivery);
+	if (!assignDeliveryCompany(pStorage, newDelivery))
+		if (!addDeliveryCompany)
+			return 0;
 	pStorage->deliveryArr[pStorage->numOfDeliveries] = newDelivery;
 	pStorage->numOfDeliveries++;
 	return 1;
@@ -417,7 +420,7 @@ void addSpecificElement(Storage* pStorage)
 		printf("Successfully added\n");
 }
 
-void sortProductArray(Storage* pStorage)
+int	sortMenuProductArray(Storage* pStorage)
 {
 	int choice, check = 0;
 	do {
@@ -428,23 +431,32 @@ void sortProductArray(Storage* pStorage)
 	switch (choice)
 	{
 	case 1:
-		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByName);
+		qsortProductArr(pStorage, compareProductsByName);
 		printf("Product array now sorted by alphabetical order\n");
+		return 1;
 		break;
 	case 2:
-		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByProductType);
+		qsortProductArr(pStorage, compareProductsByProductType);
 		printf("Product array now sorted by product type\n");
+		return 2;
 		break;
 	case 3:
-		qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareTwoProductsByManufacturerId);
+		qsortProductArr(pStorage, compareTwoProductsByManufacturerId);
 		printf("Product array now sorted by manufacturer id\n");
+		return 3;
 		break;
 	}
+	return 0;
 }
 
-void bsearchProductArray(Storage* pStorage)
+void qsortProductArr(Storage* pStorage, int(*compare)(const void*, const void*))
 {
-	int choice, check = 0;
+	qsort(pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compare);
+}
+
+void bsearchProductArray(Storage* pStorage, int choice)
+{
+	int check = 0;
 	Product* key = (Product*)malloc(sizeof(Product));
 	Product* returnValue = NULL;
 	if (!key)
@@ -453,26 +465,29 @@ void bsearchProductArray(Storage* pStorage)
 		return;
 	}
 
-	do {
-		printf("Enter in which order to sort:\nBy-\n1.Alphabetical order\n2.Product type\n3.Manufacturer ID\n");
-		scanf("%d", &choice);
-	} while (choice < 1 || choice > 3);
-
 	switch (choice)
 	{
 	case 1:
-		key->nameOfProduct = getDynStr("Enter name of product\n");
-		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByName);
+		printf("Searching by Product name\n");
+		key->nameOfProduct = getStrExactName("Enter name of product");
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByNameForFind);
 		free(key->nameOfProduct);
 		break;
 	case 2:
+		printf("Searching by Product type\n");
 		key->productType = getTypeProduct();
-		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByProductType);
-		free(key->nameOfProduct);
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareProductsByProductTypeForFind);
 		break;
 	case 3:
-		initManufacturer(&key->manufacturer, pStorage->manArray, pStorage->numOfManufacturers);
-		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareTwoProductsByManufacturerId);
+		printf("Searching by Manufacturer ID\n");
+		do {
+			printf("Enter manufacturer ID\n");
+			scanf("%d", &key->manufacturer.id);
+		} while (key->manufacturer.id < LOWER_BORDER_ID || key->manufacturer.id > UPPER_BORDER_ID);
+		returnValue = bsearch(key, pStorage->productArr, pStorage->numOfProducts, sizeof(Product*), compareTwoProductsByManufacturerIdForFind);
+		break;
+	default:
+		printf("Product array not sorted, unable to search\n");
 		break;
 	}
 	free(key);

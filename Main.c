@@ -4,6 +4,7 @@
 
 #define EXIT -1
 #define READ_TXT "Storage.txt"
+#define WRITE_TEXT "WriteStorage.txt"
 int menu();
 
 typedef enum
@@ -18,7 +19,7 @@ const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific
 
 int main()
 {
-	int option, stop = 0;
+	int option, stop = 0, check = 0;
 	Storage storage;
 	do
 	{
@@ -38,10 +39,10 @@ int main()
 			addSpecificElement(&storage);
 			break;
 		case eProductSort:
-			sortProductArray(&storage);
+			check = sortMenuProductArray(&storage);
 			break;
 		case eFindProduct:
-			bsearchProductArray(&storage);
+			bsearchProductArray(&storage, check);
 			break;
 		case eCreative1:
 
@@ -58,6 +59,8 @@ int main()
 			break;
 		}
 	} while (!stop);
+
+	writeStorageToTextFile(WRITE_TEXT, &storage);
 }
 
 

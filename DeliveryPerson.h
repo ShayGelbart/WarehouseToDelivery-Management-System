@@ -7,8 +7,8 @@
 #define UPPER_BORDER_TIME 72
 #define LOWER_BORDER_TIME 12
 
-#define UPPER_BORDER_ID 1
-#define LOWER_BORDER_ID 9999
+#define UPPER_BORDER_ID 9999
+#define LOWER_BORDER_ID 1
 
 typedef struct
 {

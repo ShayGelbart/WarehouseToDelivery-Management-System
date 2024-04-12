@@ -98,5 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage.txt" />
+    <Text Include="WriteStorage.txt" />
   </ItemGroup>
 </Project>

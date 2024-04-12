@@ -35,7 +35,7 @@ int	 readManufacturerFromTextFile(Manufacturer* pMan, FILE* fp)
 {
 	char name[MAX_STR_LEN] = { 0 };
 	int id = 0, temp;
-	fgetc(fp);
+	//fgetc(fp);
 	if (fgets(name, MAX_STR_LEN, fp) == NULL)
 		return 0;
 	name[strlen(name) - 1] = '\0';

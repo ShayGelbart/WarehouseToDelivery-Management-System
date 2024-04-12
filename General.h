@@ -8,11 +8,11 @@
 #define IF_NULL_RETURN_ZERO(object) {if(!object) {return 0;}}
 
 typedef enum {
-	eToys, eBooks, eElectronics, eSports, eFurniture, eClothing, eBeauty, eNofProductTypes
+	eBeauty, eBooks, eClothing, eElectronics, eFurniture, eSports, eToys, eNofProductTypes
 } eProductType;
 
 static const char* productTypeStr[eNofProductTypes]
-= { "Toys", "Books", "Electronics", "Sports", "Furniture" , "Clothing", "Beauty" };
+= { "Beauty", "Books", "Clothing", "Electronics", "Furniture", "Sports", "Toys"};
 
 char* getStrExactName(const char* msg);
 char* myGets(char* buffer, int size);

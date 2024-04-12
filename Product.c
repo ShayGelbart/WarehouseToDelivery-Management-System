@@ -46,7 +46,7 @@ int writeProductToTextFile(FILE* fp, Product* pProduct)
 {
 	if (!writeManufacturerToTextFile(&pProduct->manufacturer, fp))
 		return 0;
-	fprintf(fp, "%d\n%s\n", pProduct->productType, pProduct->nameOfProduct);
+	fprintf(fp, "%s\n", pProduct->nameOfProduct);
 	return 1;
 }
 
@@ -68,36 +68,68 @@ int writeProductToBinaryFile(FILE* fp, Product* pProduct)
 
 int compareTwoProductsByManufacturerId(const void* v1, const void* v2)
 {
-	Product* p1 = (Product*)v1;
-	Product* p2 = (Product*)v2;
-	return p1->manufacturer.id - p2->manufacturer.id;
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	/*Product* p1 = (Product*)pp1;
+	Product* p2 = (Product*)pp2;*/
+	return pp1[0]->manufacturer.id - pp2[0]->manufacturer.id;
 }
 
 int	compareProductsByName(const void* v1, const void* v2)
 {
-	Product* p1 = (Product*)v1;
-	Product* p2 = (Product*)v2;
-	return strcmp(p1->nameOfProduct, p2->nameOfProduct);
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	return strcmp(pp1[0]->nameOfProduct, pp2[0]->nameOfProduct);
+}
+
+int compareTwoProductsByManufacturerIdForFind(const void* v1, const void* v2)
+{
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	Product* p1 = (Product*)pp1;
+	//Product* p2 = (Product*)pp2;*/
+	return p1->manufacturer.id - pp2[0]->manufacturer.id;
+}
+
+int	compareProductsByNameForFind(const void* v1, const void* v2)
+{
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	Product* p1 = (Product*)pp1;
+	return strcmp(p1->nameOfProduct, pp2[0]->nameOfProduct);
+}
+
+int compareProductsByProductTypeForFind(const void* v1, const void* v2)
+{
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	Product* p1 = (Product*)pp1;
+	//Product* p2 = (Product*)pp2;*/
+	if (p1->productType < pp2[0]->productType) return -1;
+	else if (p1->productType > pp2[0]->productType) return 1;
+	else return 0;
 }
 
 int compareProductsByProductType(const void* v1, const void* v2)
 {
-	Product* p1 = (Product*)v1;
-	Product* p2 = (Product*)v2;
-	if (p1->productType < p2->productType) return -1;
-	else if (p1->productType > p2->productType) return 1;
+	Product** pp1 = (Product**)v1;
+	Product** pp2 = (Product**)v2;
+	/*Product* p1 = (Product*)pp1;
+	Product* p2 = (Product*)pp2;*/
+	if (pp1[0]->productType < pp2[0]->productType) return -1;
+	else if (pp1[0]->productType > pp2[0]->productType) return 1;
 	else return 0;
 }
 
 void printProduct(const Product* pProduct)
 {
-	printf("Name of product: %s\tType of product: %s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
+	printf("Name of product: %-17s\tType of product: %-12s\tManufacturer: %-10s\tID: %d\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name, pProduct->manufacturer.id);
 }
 
 void printProductGeneral(const Product** ppProduct)
 {
 	Product* pProduct = *ppProduct;
-	printf("Name of product: %s\tType of product: %-12s\tManufacturer: %s\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name);
+	printf("Name of product: %-17s\tType of product: %-12s\tManufacturer: %-10s\tID: %d\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name, pProduct->manufacturer.id);
 }
 
 
