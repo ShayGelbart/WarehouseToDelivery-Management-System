@@ -10,7 +10,7 @@ void initManufacturer(Manufacturer* pMan, Manufacturer** manArray, int numOfManu
 
 	do
 	{
-		printf("Enter your id\n");
+		printf("Enter id\n");
 		scanf("%d", &pMan->id);
 	} while (pMan->id <= 0 || findManufacturerById(pMan->id, manArray, numOfManufacturers));
 

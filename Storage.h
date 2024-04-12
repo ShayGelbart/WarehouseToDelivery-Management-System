@@ -25,7 +25,7 @@ int					initStorageFromTextFile(char* fileName, Storage* pStorage);
 int					initStorageFromBinaryFile(char* fileName, Storage* pStorage);
 int					writeStorageToTextFile(char* fileName, Storage* pStorage);
 int					writeStorageToBinaryFile(char* fileName, Storage* pStorage);
-void				uploadSystemFromFile(char* fileName, Storage* pStorage);
+void				uploadSystemFromFile(char* fileNameText, char* fileNameBin, Storage* pStorage);
 void				addSpecificElement(Storage* pStorage);
 int					addProductToStorage(Storage* pStorage);
 int					addDeliveryCompany(Storage* pStorage);

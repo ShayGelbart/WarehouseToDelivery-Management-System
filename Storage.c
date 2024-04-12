@@ -302,15 +302,15 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 	return 1;
 }
 
-void uploadSystemFromFile(char* fileName, Storage* pStorage)
+void uploadSystemFromFile(char* fileNameText, char* fileNameBin, Storage* pStorage)
 {
 	int choice;
 	printf("Choose the kind of file to upload the system from:\nText - Enter 0\nBinary - Enter 1\n");
 	scanf("%d", &choice);
 	if (choice == 0)
-		initStorageFromTextFile(fileName, pStorage);
+		initStorageFromTextFile(fileNameText, pStorage);
 	else
-		initStorageFromBinaryFile("CHANGE LATER", pStorage);
+		initStorageFromBinaryFile(fileNameBin, pStorage);
 }
 
 int addProductToStorage(Storage* pStorage)

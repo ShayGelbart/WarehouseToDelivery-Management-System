@@ -5,6 +5,9 @@
 #define EXIT -1
 #define READ_TXT "Storage.txt"
 #define WRITE_TEXT "WriteStorage.txt"
+#define READ_BIN "Storage.bin"
+#define WRITE_BIN "WriteStorage.bin"
+
 int menu();
 
 typedef enum
@@ -21,13 +24,14 @@ int main()
 {
 	int option, stop = 0, check = 0;
 	Storage storage;
+	initStorage(&storage);
 	do
 	{
 		option = menu();
 		switch (option)
 		{
 		case eUploadSystem:
-			uploadSystemFromFile(READ_TXT, &storage);
+			uploadSystemFromFile(READ_TXT, WRITE_BIN, &storage);
 			break;
 		case ePrintSystem:
 			printStorage(&storage);
@@ -60,7 +64,7 @@ int main()
 		}
 	} while (!stop);
 
-	writeStorageToTextFile(WRITE_TEXT, &storage);
+	writeStorageToTextFile(WRITE_BIN, &storage);
 }
 
 
