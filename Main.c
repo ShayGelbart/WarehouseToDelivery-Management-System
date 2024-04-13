@@ -31,7 +31,7 @@ int main()
 		switch (option)
 		{
 		case eUploadSystem:
-			uploadSystemFromFile(READ_TXT, WRITE_BIN, &storage);
+			uploadSystemFromFile(READ_TXT, READ_BIN, &storage);
 			break;
 		case ePrintSystem:
 			printStorage(&storage);
@@ -64,7 +64,8 @@ int main()
 		}
 	} while (!stop);
 
-	writeStorageToTextFile(WRITE_BIN, &storage);
+	writeStorageToBinaryFile(READ_BIN, &storage);
+	//writeStorageToTextFile(WRITE_TEXT, &storage);
 }
 
 
