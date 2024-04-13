@@ -5,8 +5,10 @@
 
 void initDeliveryPerson(DeliveryPerson* pDelPer)
 {
+	printf("Adding Delivery Person:\n");
 	pDelPer->person = (Person*)malloc(sizeof(Person));
-	IF_NULL_RETURN_ZERO(pDelPer->person)
+	if (!pDelPer->person)
+		return;
 	initPerson(pDelPer->person);
 	pDelPer->ratingArr = NULL;
 	pDelPer->averageRating = 0;

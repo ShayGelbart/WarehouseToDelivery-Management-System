@@ -365,7 +365,7 @@ int addDelivery(Storage* pStorage)
 	pStorage->deliveryArr = temp;
 	initDelivery(newDelivery);
 	if (!assignDeliveryCompany(pStorage, newDelivery))
-		if (!addDeliveryCompany)
+		if (!addDeliveryCompany(pStorage))
 			return 0;
 	pStorage->deliveryArr[pStorage->numOfDeliveries] = newDelivery;
 	pStorage->numOfDeliveries++;

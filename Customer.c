@@ -11,6 +11,7 @@
 
 void initCustomer(Customer* pCustomer)
 {
+	printf("Adding a customer:\n");
 	initPerson(&pCustomer->person);
 	initAddress(&pCustomer->address);
 

@@ -4,7 +4,8 @@
 
 void initAddress(Address* pAddress)
 {
-    pAddress->region = getRegion(pAddress);
+	printf("Adding Address:\n");
+	pAddress->region = getRegion(pAddress);
 	
 	printf("Enter your city's name\n");
 	myGets(pAddress->city, MAX_STR_LEN);
