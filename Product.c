@@ -4,7 +4,7 @@
 #include "Product.h"
 #include "General.h"
 
-void initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers)
+void initProduct(Product* pProduct)
 {
 	pProduct->nameOfProduct = getStrExactName("Enter the name of your product");
 	pProduct->productType = getTypeProduct();
@@ -83,6 +83,13 @@ int	compareProductsByName(const void* v1, const void* v2)
 	Product** pp1 = (Product**)v1;
 	Product** pp2 = (Product**)v2;
 	return strcmp(pp1[0]->nameOfProduct, pp2[0]->nameOfProduct);
+}
+
+int	compareProductsByNameForList(const void* v1, const void* v2)
+{
+	Product* p1 = (Product*)v1;
+	Product* p2 = (Product*)v2;
+	return strcmp(p1->nameOfProduct, p2->nameOfProduct);
 }
 
 int compareTwoProductsByManufacturerIdForFind(const void* v1, const void* v2)

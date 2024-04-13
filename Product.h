@@ -12,7 +12,7 @@ typedef struct
 	char* nameOfProduct;
 }Product;
 
-void			initProduct(Product* pProduct, Manufacturer** manArray, int numOfManufacturers);
+void			initProduct(Product* pProduct);
 int				initProductFromTextFile(FILE* fp, Product* pProduct);
 int				initProductFromBinaryFile(FILE* fp, Product* pProduct);
 int				writeProductToTextFile(FILE* fp, Product* pProduct);
@@ -20,6 +20,7 @@ int				writeProductToBinaryFile(FILE* fp, Product* pProduct);
 int				compareTwoProductsByManufacturerId(const void* v1, const void* v2);
 int				compareTwoProductsByManufacturerIdForFind(const void* v1, const void* v2);
 int				compareProductsByName(const void* v1, const void* v2);
+int				compareProductsByNameForList(const void* v1, const void* v2);
 int				compareProductsByNameForFind(const void* v1, const void* v2);
 int				compareProductsByProductType(const void* v1, const void* v2);
 int				compareProductsByProductTypeForFind(const void* v1, const void* v2);

@@ -3,22 +3,50 @@
 #include "Delivery.h"
 #include "list.h"
 
-int initDelivery(Delivery* pDelivery)
+int initDelivery(Delivery* pDelivery, Manufacturer** manArray, int numOfManufacturers)
 {
+	int productCount;
+
 	pDelivery->customer = (Customer*)malloc(sizeof(Customer));
 	IF_NULL_RETURN_ZERO(pDelivery->customer)
-	pDelivery->products = (LIST*)malloc(sizeof(LIST));
+		pDelivery->products = (LIST*)malloc(sizeof(LIST));
 	IF_NULL_RETURN_ZERO(pDelivery->products)
-	pDelivery->deliveryPerson = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
-	IF_NULL_RETURN_ZERO(pDelivery->deliveryPerson)
+		/*pDelivery->deliveryPerson = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+		IF_NULL_RETURN_ZERO(pDelivery->deliveryPerson)*/
+
+	do {
+		printf("Enter how many Products you want to add to your delivery\n");
+		scanf("%d", &productCount);
+	} while (productCount <= 0);
+
+	for (int i = 0; i < productCount; i++)
+	{
+		Product* p = (Product*)malloc(sizeof(Product));
+		IF_NULL_RETURN_ZERO(p)
+		initProduct(p);
+		Manufacturer* tempMan = assignExistingManufacturerByType(manArray, numOfManufacturers, p->productType);
+		if (tempMan == NULL)
+		{// if couldn't find manufacturer from the man array
+			printf("You didn't find a manufacturer, try adding a new one from the main menu\n");
+			free(pDelivery->customer);
+			free(pDelivery->products);
+			return 0;
+		}
+		p->manufacturer = *tempMan;
+		addProduct(pDelivery, p);
+		pDelivery->numberOfProducts++;
+		printf("Successfully added\n");
+	}
+
 	initCustomer(pDelivery->customer);
 	if (!L_init(pDelivery->products))
 		return 0;
 	pDelivery->numberOfProducts = 0;
 	getCorrectDate(&pDelivery->deliveryDate);
 	pDelivery->deliveryCompany = NULL;
-	initDeliveryPerson(pDelivery->deliveryPerson);
+	//initDeliveryPerson(pDelivery->deliveryPerson);
 
+	
 	return 1;
 }
 
@@ -140,22 +168,45 @@ void changeDeliveryDate(Delivery* pDelivery)
 void changeProduct(Delivery* pDelivery, Product* pProduct1, Product* pProduct2)
 {
 	//pProduct1 product that needs to be removed and instead of it needs to be put pProduct2
-	removeProduct(pDelivery, pProduct1);
+	NODE* temp = L_find(&pDelivery->products->head, pProduct1, compareProductsByName);
+	if(temp != NULL)
+		removeProduct(pDelivery, temp);
 	addProduct(pDelivery, pProduct2);
 }
 
-int removeProduct(Delivery* pDelivery, Product* pProduct)
+int removeProduct(Delivery* pDelivery, NODE* pNode)
 {
-	NODE* temp = L_find(&pDelivery->products->head, pProduct, compareProductsByName);
-	if (!L_delete(temp, NULL))
+	
+	if (!L_delete(pNode, NULL))
 		return 0;
+	pDelivery->numberOfProducts--;
 	return 1;
 }
 
+void assignDeliveryPersonToDelivery(DeliveryCompany* pDelComp, Delivery* pDelivery)
+{
+	int choiceIndex = 1;
+	if (pDelComp->deliveryPersonCount == 0)
+	{
+		printf("No existing delivery persons in the company, add one\n");
+		addDeliveryPerson(pDelComp);
+	}
+	else
+	{
+		printf("Delivery persons:\n");
+		printDeliveryPersonArrayWithIndex(pDelComp);
+		do {
+			printf("Enter your preferred delivery person's index\n");
+			scanf("%d", &choiceIndex);
+		} while (choiceIndex <= 0 || choiceIndex > pDelComp->deliveryPersonCount);
+	}
+	pDelivery->deliveryPerson = pDelComp->delPerArray[choiceIndex - 1];
+}
 
 void addProduct(Delivery* pDelivery, Product* pProduct)
 {
 	L_insert(&pDelivery->products->head, pProduct);
+	pDelivery->numberOfProducts++;
 }
 
 void changeRatingWhenDelivered(Delivery* pDelivery)
@@ -180,4 +231,5 @@ void printDelivery(Delivery** ppDelivery)
 	printf("Delivery Company: %s \n", pDelivery->deliveryCompany->name);
 	printf("Delivery Person: \t ");
 	printDeliveryPerson(pDelivery->deliveryPerson);
+	printf("\n");
 }

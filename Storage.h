@@ -36,6 +36,10 @@ void				qsortProductArr(Storage* pStorage, int(*compare)(const void*, const void
 void				bsearchProductArray(Storage* pStorage, int choice);
 DeliveryCompany*	findDeliveryCompanyByRegion(DeliveryCompany* deliveryCompArr, int size, eRegionType region);
 int					assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery);
+void				returnRating(Storage* pStorage);
+void				editProductsOfDelivery(Storage* pStorage);
+int					addProductToDelivery(Storage* pStorage, int deliveryIndex);
+int					removeProductFromDelivery(Storage* pStorage, int deliveryIndex);
 void				menuPrintSpecificElement(Storage* pStorage);
 void				printProductArr(Storage* pStorage);
 void				printDeliveryCompanyArr(Storage* pStorage);

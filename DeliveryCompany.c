@@ -7,13 +7,26 @@
 
 int initDeliveryCompany(DeliveryCompany* pDelComp, DeliveryCompany* delCompArr, int size)
 {
-	pDelComp->name = getStrExactName("Enter Name:");
-	pDelComp->delPerArray = NULL;
-	pDelComp->deliveryPersonCount = 0;
+	int personCount;
 	pDelComp->region = getRegion();
 	for (int i = 0; i < size; i++)
 		if (delCompArr[i].region == pDelComp->region)
 			return 0;
+	pDelComp->name = getStrExactName("Enter Name:");
+	pDelComp->delPerArray = NULL;
+	pDelComp->deliveryPersonCount = 0;
+	
+	do {
+		printf("Enter how many Delivery persons you want to add to company\n");
+		scanf("%d", &personCount);
+	} while (personCount < 0);
+
+	for (int i = 0; i < personCount; i++)
+	{
+		if (!addDeliveryPerson(pDelComp))
+			return 0;
+		printf("Successfully added\n");
+	}
 	return 1;
 }
 
@@ -121,9 +134,13 @@ int	addDeliveryPerson(DeliveryCompany* pDelComp)
 		free(newPer);
 		return 0;
 	}
-
+	
 	pDelComp->delPerArray = temp;
 	initDeliveryPerson(newPer);
+
+	if (findDeliveryPersonInArr(pDelComp, newPer) != -1)
+		return 0;
+
 	pDelComp->delPerArray[pDelComp->deliveryPersonCount] = newPer;
 	pDelComp->deliveryPersonCount++;
 	return 1;
@@ -164,17 +181,6 @@ int	compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson* p2)
 {
 	return (p1->id - p2->id);
 }
-
-//void assignDeliveryPersonToDelivery(DeliveryCompany* pDelPer, Delivery* pDelivery)
-//{
-//	int choiceIndex;
-//	printDeliveryPersonArrayWithIndex(pDelPer);
-//	do {
-//		printf("Enter your preferred delivery person\n");
-//		scanf("%d", &choiceIndex);
-//	} while (choiceIndex <= 0 || choiceIndex > pDelPer->deliveryPersonCount);
-//	
-//}
 
 void printDeliveryPersonArrayWithIndex(DeliveryCompany* pDelComp)
 {

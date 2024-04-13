@@ -325,7 +325,7 @@ int addProductToStorage(Storage* pStorage)
 	}
 	pStorage->productArr = tempArr;
 
-	initProduct(newProduct, pStorage->manArray, pStorage->numOfManufacturers);
+	initProduct(newProduct);
 	Manufacturer* tempMan = assignExistingManufacturerByType(pStorage->manArray, pStorage->numOfManufacturers, newProduct->productType);
 	if (tempMan == NULL) // if couldn't find manufacturer from the man array
 	{
@@ -363,10 +363,19 @@ int addDelivery(Storage* pStorage)
 		FREE_RETURN_ZERO(newDelivery)
 	}
 	pStorage->deliveryArr = temp;
-	initDelivery(newDelivery);
+	if (!initDelivery(newDelivery, pStorage->manArray, pStorage->numOfManufacturers))
+	{
+		FREE_RETURN_ZERO(newDelivery)
+	}
 	if (!assignDeliveryCompany(pStorage, newDelivery))
+	{
 		if (!addDeliveryCompany(pStorage))
-			return 0;
+		{
+			FREE_RETURN_ZERO(newDelivery)
+		}
+		newDelivery->deliveryCompany = &pStorage->deliveryCompanyArr[pStorage->numOfDeliveryComp - 1];
+		assignDeliveryPersonToDelivery(newDelivery->deliveryCompany, newDelivery);
+	}
 	pStorage->deliveryArr[pStorage->numOfDeliveries] = newDelivery;
 	pStorage->numOfDeliveries++;
 	return 1;
@@ -539,6 +548,132 @@ int assignDeliveryCompany(Storage* pStorage, Delivery* pDelivery)
 		return 0;
 	}
 	pDelivery->deliveryCompany = temp;
+	assignDeliveryPersonToDelivery(pDelivery->deliveryCompany, pDelivery);
+	return 1;
+}
+
+void returnRating(Storage* pStorage)
+{
+	int deliveryIndex;
+	double rating;
+	do {
+		printDeliveryArr(pStorage);
+		printf("Enter your Delivery index\n");
+		scanf("%d", &deliveryIndex);
+	} while (deliveryIndex < 1 || deliveryIndex > pStorage->numOfDeliveries);
+
+	do {
+		printf("Enter your rating:\n");
+		scanf("%lf", &rating);
+	} while (rating < 0.0 || rating > 5.0);
+	
+	if (!changeRating(pStorage->deliveryArr[deliveryIndex - 1]->deliveryPerson, rating))
+		printf("Couldn't change rating. Try again\n");
+
+	printf("Successfully added your rating\n");
+}
+
+void editProductsOfDelivery(Storage* pStorage)
+{
+	int deliveryIndex, choice;
+	do {
+		printDeliveryArr(pStorage);
+		printf("Enter your Delivery index\n");
+		scanf("%d", &deliveryIndex);
+	} while (deliveryIndex < 1 || deliveryIndex > pStorage->numOfDeliveries);
+	
+	do {
+	printf("Would you like to:\n1.Add a new product\n2.Remove a product\n3.Replace a product with a new product\n");
+	scanf("%d", &choice);
+	} while (choice < 1 || choice > 3);
+
+	if (choice == 1)
+	{
+		if (!addProductToDelivery(pStorage, deliveryIndex))
+			printf("Failed to add product\n");
+		else
+			printf("Successfully added product\n");
+	}
+	else if (choice == 2)
+	{
+		if (!removeProductFromDelivery(pStorage, deliveryIndex))
+			printf("Failed to remove product\n");
+		else
+			printf("Successfully removed product\n");
+	}
+	else
+	{
+		if (!removeProductFromDelivery(pStorage, deliveryIndex))
+			printf("Failed to remove product\n");
+		else
+			printf("Successfully removed product\n");
+		
+		if (!addProductToDelivery(pStorage, deliveryIndex))
+			printf("Failed to add product\n");
+		else
+			printf("Successfully added product\n");
+	}
+}
+
+int addProductToDelivery(Storage* pStorage, int deliveryIndex)
+{
+	int choiceProduct, productIndex;
+
+	printProductArr(pStorage);
+	printf("Is there a product you want to add to your delivery?\nEnter 0-Yes, 1-No\n");
+	scanf("%d", &choiceProduct);
+	if (choiceProduct == 0)
+	{
+		do {
+			printf("Enter the index of the product you want to add\n");
+			scanf("%d", &productIndex);
+		} while (productIndex < 1 || productIndex > pStorage->numOfProducts);
+		addProduct(pStorage->deliveryArr[deliveryIndex - 1], pStorage->productArr[productIndex - 1]);
+	}
+	else
+	{
+		Product* p = (Product*)malloc(sizeof(Product));
+		IF_NULL_RETURN_ZERO(p)
+			initProduct(p);
+		Manufacturer* tempMan = assignExistingManufacturerByType(pStorage->manArray, pStorage->numOfManufacturers, p->productType);
+		if (tempMan == NULL)
+		{// if couldn't find manufacturer from the man array
+			if (!addManufacturer(pStorage)) // add new manufacturer
+				return 0;
+			p->manufacturer = *pStorage->manArray[pStorage->numOfManufacturers - 1];
+		}
+		else
+			p->manufacturer = *tempMan;
+		addProduct(pStorage->deliveryArr[deliveryIndex - 1], p);
+	}
+	return 1;
+}
+
+int removeProductFromDelivery(Storage* pStorage, int deliveryIndex)
+{
+	int productIndex;
+	L_print(pStorage->deliveryArr[deliveryIndex - 1]->products, printProduct);
+	do {
+		printf("Enter the index of the product you want to remove\n");
+		scanf("%d", &productIndex);
+	} while (productIndex < 1 || productIndex > pStorage->deliveryArr[deliveryIndex - 1]->numberOfProducts);
+	/* temp = (NODE*)malloc(sizeof(NODE));
+	IF_NULL_RETURN_ZERO(temp)*/
+	NODE* temp = L_find(pStorage->deliveryArr[deliveryIndex - 1]->products->head.next, pStorage->productArr[productIndex - 1], compareProductsByNameForList);
+	if (temp == NULL)
+	{
+		if (!removeProduct(pStorage->deliveryArr[deliveryIndex - 1], &pStorage->deliveryArr[deliveryIndex - 1]->products->head))
+		{
+			FREE_RETURN_ZERO(temp)
+		}
+	}
+	else
+	{
+		if (!removeProduct(pStorage->deliveryArr[deliveryIndex - 1], temp))
+		{
+			FREE_RETURN_ZERO(temp)
+		}
+	}
 	return 1;
 }
 

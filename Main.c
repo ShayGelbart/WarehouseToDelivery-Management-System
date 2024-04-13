@@ -17,7 +17,7 @@ typedef enum
 } eMenuOptions;
 
 const char* str[eNofOptions] = { "Upload System","Print System", "Print Specific Element", "Add Elements",  "Product Sort",
-								"Find Product", "Creative1", "Creative2" };
+								"Find Product", "Rate Delivery", "Edit Delivery" };
 
 
 int main()
@@ -49,15 +49,15 @@ int main()
 			bsearchProductArray(&storage, check);
 			break;
 		case eCreative1:
-
+			returnRating(&storage);
 			break;
 		case eCreative2:
+			editProductsOfDelivery(&storage);
 			break;
 		case EXIT:
 			printf("Bye bye\n");
 			stop = 1;
 			break;
-
 		default:
 			printf("Wrong option\n");
 			break;
