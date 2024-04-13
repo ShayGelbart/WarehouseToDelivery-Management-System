@@ -263,7 +263,7 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		CLOSE_RETURN_ZERO(fp)
 	}
 	for (int i = 0; i < pStorage->numOfProducts; i++)
-		if (!writeProductToTextFile(fp, pStorage->productArr[i]))
+		if (!writeProductToBinaryFile(fp, pStorage->productArr[i]))
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
@@ -274,7 +274,7 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		CLOSE_RETURN_ZERO(fp)
 	}
 	for (int i = 0; i < pStorage->numOfDeliveryComp; i++)
-		if (!writeDeliveryCompanyToTextFile(fp, &pStorage->deliveryCompanyArr[i]))
+		if (!writeDeliveryCompanyToBinaryFile(fp, &pStorage->deliveryCompanyArr[i]))
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
@@ -284,7 +284,7 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		CLOSE_RETURN_ZERO(fp)
 	}
 	for (int i = 0; i < pStorage->numOfDeliveries; i++)
-		if (!writeDeliveryToTextFile(fp, pStorage->deliveryArr[i]))
+		if (!writeDeliveryToBinaryFile(fp, pStorage->deliveryArr[i]))
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
@@ -294,7 +294,7 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		CLOSE_RETURN_ZERO(fp)
 	}
 	for (int i = 0; i < pStorage->numOfManufacturers; i++)
-		if (!writeManufacturerToTextFile(pStorage->manArray[i], fp))
+		if (!writeManufacturerToBinFile(fp, pStorage->manArray[i]))
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}
