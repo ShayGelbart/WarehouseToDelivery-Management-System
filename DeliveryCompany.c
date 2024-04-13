@@ -188,6 +188,6 @@ void printDeliveryPersonArrayWithIndex(DeliveryCompany* pDelComp)
 
 void printDeliveryCompany(DeliveryCompany* pDelComp)
 {
-	printf("In company: %s located in %s there are %d delivery persons:\n", pDelComp->name, regionTypeStr[pDelComp->region], pDelComp->deliveryPersonCount);
+	printf("Company: %s\tRegion: %s\tDelivery Persons: %d\n", pDelComp->name, regionTypeStr[pDelComp->region], pDelComp->deliveryPersonCount);
 	printDeliveryPersonArrayWithIndex(pDelComp);
 }

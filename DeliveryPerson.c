@@ -129,5 +129,5 @@ double calcAverageRating(DeliveryPerson* pDelPer)
 void printDeliveryPerson(DeliveryPerson* pDelPer)
 {
 	printPerson(pDelPer->person);
-	printf("Number of deliveries: %d\tAverage rating: %.2f(%d)\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->numOfDeliveries, pDelPer->deliveryTime);
+	printf("Deliveries: %d\tAverage rating: %.2f(%d)\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->numOfDeliveries, pDelPer->deliveryTime);
 }

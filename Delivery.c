@@ -172,11 +172,12 @@ void changeRatingWhenDelivered(Delivery* pDelivery)
 void printDelivery(Delivery** ppDelivery)
 {
 	Delivery* pDelivery = *ppDelivery;
+	printf("Delivery to-> ");
 	printCustomer(pDelivery->customer);
 	printf("Number of products %d", pDelivery->numberOfProducts);
 	L_print(pDelivery->products, printProduct);
 	printDate(&pDelivery->deliveryDate);
-	printf("Delivery Company Name: %s \n", pDelivery->deliveryCompany->name);
+	printf("Delivery Company: %s \n", pDelivery->deliveryCompany->name);
 	printf("Delivery Person: \t ");
 	printDeliveryPerson(pDelivery->deliveryPerson);
 }

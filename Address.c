@@ -99,5 +99,5 @@ int writeAddressToBinaryFile(FILE* fp, Address* pAddress)
 
 void printAddress(Address* pAddress)
 {
-    printf("In region: %s\nCity: %s\tStreet: %s\tHouse: %d\n" , regionTypeStr[pAddress->region], pAddress->city, pAddress->street , pAddress->houseNumber);
+    printf("Region: %s\nCity: %s\tStreet: %s\tHouse: %d\n" , regionTypeStr[pAddress->region], pAddress->city, pAddress->street , pAddress->houseNumber);
 }
