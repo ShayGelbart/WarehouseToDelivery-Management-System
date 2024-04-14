@@ -135,3 +135,10 @@ void printDeliveryPerson(DeliveryPerson* pDelPer)
 	printPerson(pDelPer->person);
 	printf("Deliveries: %d\tAverage rating: %.2f(%d)\tEstimated delivery time: %d hours\n", pDelPer->numOfDeliveries, pDelPer->averageRating, pDelPer->numOfDeliveries, pDelPer->deliveryTime);
 }
+
+void freeDeliveryPerson(DeliveryPerson* pDelPer)
+{
+	freePerson(pDelPer->person);
+	free(pDelPer->person);
+	free(pDelPer->ratingArr);
+}

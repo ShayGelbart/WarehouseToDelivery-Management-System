@@ -46,5 +46,7 @@ void				printDeliveryCompanyArr(Storage* pStorage);
 void				printDeliveryArr(Storage* pStorage);
 void				printManufacturerArr(Storage* pStorage);
 void				printStorage(Storage* pStorage);
+void				freeStorage(Storage* pStorage);
+
 
 #endif // !__STORAGE__

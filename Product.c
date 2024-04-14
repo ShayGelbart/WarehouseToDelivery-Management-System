@@ -143,4 +143,7 @@ void printProductGeneral(const Product** ppProduct)
 	printf("Name of product: %-17s\tType of product: %-12s\tManufacturer: %-10s\tID: %d\n", pProduct->nameOfProduct, productTypeStr[pProduct->productType], pProduct->manufacturer.name, pProduct->manufacturer.id);
 }
 
-
+void freeProduct(Product* pProduct)
+{
+	free(pProduct->nameOfProduct);
+}

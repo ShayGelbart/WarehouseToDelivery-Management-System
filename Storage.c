@@ -715,3 +715,32 @@ void printStorage(Storage* pStorage)
 	printf("\n");
 	printManufacturerArr(pStorage);
 }
+
+void freeStorage(Storage* pStorage)
+{
+	for (int i = 0; i < pStorage->numOfProducts; i++)
+	{
+		freeProduct(pStorage->productArr[i]);
+		free(pStorage->productArr[i]);
+	}
+	free(pStorage->productArr);
+	
+	for (int i = 0; i < pStorage->numOfDeliveryComp; i++)
+	{
+		freeDeliveryCompany(&pStorage->deliveryCompanyArr[i]);
+	}
+	free(pStorage->deliveryCompanyArr);
+
+	for (int i = 0; i < pStorage->numOfDeliveries; i++)
+	{
+		freeDelivery(pStorage->deliveryArr[i]);
+		free(pStorage->deliveryArr[i]);
+	}
+	free(pStorage->deliveryArr);
+
+	for (int i = 0; i < pStorage->numOfManufacturers; i++)
+	{
+		free(pStorage->manArray[i]);
+	}
+	free(pStorage->manArray);
+}

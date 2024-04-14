@@ -23,5 +23,7 @@ int		fireDeliveryPerson(DeliveryCompany* pDelComp, DeliveryPerson* pDelPer);
 int		compareTwoDeliveryPerson(DeliveryPerson* p1, DeliveryPerson* p2);
 void	printDeliveryPersonArrayWithIndex(DeliveryCompany* pDelComp);
 void	printDeliveryCompany(DeliveryCompany* pDelComp);
+void	freeDeliveryCompany(DeliveryCompany* pDelComp);
+
 
 #endif

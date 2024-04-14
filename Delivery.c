@@ -241,3 +241,15 @@ void printDelivery(Delivery** ppDelivery)
 	printDeliveryPerson(pDelivery->deliveryPerson);
 	printf("\n");
 }
+
+void freeDelivery(Delivery* pDelivery)
+{
+	L_free(pDelivery->products, freeProduct);
+	free(pDelivery->products);
+	freeCustomer(pDelivery->customer);
+	free(pDelivery->customer);
+	freeDeliveryCompany(pDelivery->deliveryCompany);
+	free(pDelivery->deliveryCompany);
+	freeDeliveryPerson(pDelivery->deliveryPerson);
+	free(pDelivery->deliveryPerson);
+}

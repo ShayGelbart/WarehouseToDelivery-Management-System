@@ -31,5 +31,7 @@ int			removeProduct(Delivery* pDelivery, NODE* pNode);
 void		assignDeliveryPersonToDelivery(DeliveryCompany* pDelComp, Delivery* pDelivery);
 void		addProduct(Delivery* pDelivery, Product* pProduct);
 void		changeRatingWhenDelivered(Delivery* pDelivery);
+void		freeDelivery(Delivery* pDelivery);
+
 
 #endif

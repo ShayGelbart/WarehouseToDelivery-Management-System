@@ -26,5 +26,7 @@ int				compareProductsByProductType(const void* v1, const void* v2);
 int				compareProductsByProductTypeForFind(const void* v1, const void* v2);
 void			printProduct(const Product* pProduct);
 void			printProductGeneral(const Product** ppProduct);
+void			freeProduct(Product* pProduct);
+
 
 #endif

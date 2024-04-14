@@ -74,3 +74,8 @@ void printPerson(Person* pPerson)
 {
     printf("Name: %s\t", pPerson->name);
 }
+
+void freePerson(Person* pPerson)
+{
+    free(pPerson->name);
+}

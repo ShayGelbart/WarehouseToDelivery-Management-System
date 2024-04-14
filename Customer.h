@@ -22,6 +22,8 @@ int			initCustomerFromBinaryFile(FILE* fp, Customer* pCustomer);
 int			writeCustomerToTextFile(FILE* fp, Customer* pCustomer);
 int			writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer);
 void		printCustomer(Customer* pCustomer);
+void		freeCustomer(Customer* pCustomer);
+
 
 //Person* newCustomer(char* pName, Delivery* pDeliveries, Address* address, int credits, int numberOfDeliveries);
 

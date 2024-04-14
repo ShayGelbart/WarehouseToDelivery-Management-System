@@ -18,14 +18,16 @@ typedef struct
 	int id;
 }DeliveryPerson;
 
-void initDeliveryPerson(DeliveryPerson* pDelPer);
-int	initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer);
-int	initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
-int	writeDeliveryPersonToTextFile(FILE* fp, DeliveryPerson* pDelPer);
-int	writeDeliveryPersonToBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
-int changeRating(DeliveryPerson* pDelPer, double Rating); // add rating to the array
-int addRatingToArray(DeliveryPerson* pDelPer, double Rating);
-double calcAverageRating(DeliveryPerson* pDelPer);
-void printDeliveryPerson(DeliveryPerson* pDelPer);
+void	initDeliveryPerson(DeliveryPerson* pDelPer);
+int		initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer);
+int		initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
+int		writeDeliveryPersonToTextFile(FILE* fp, DeliveryPerson* pDelPer);
+int		writeDeliveryPersonToBinaryFile(FILE* fp, DeliveryPerson* pDelPer);
+int		changeRating(DeliveryPerson* pDelPer, double Rating); // add rating to the array
+int		addRatingToArray(DeliveryPerson* pDelPer, double Rating);
+double	calcAverageRating(DeliveryPerson* pDelPer);
+void	printDeliveryPerson(DeliveryPerson* pDelPer);
+void	freeDeliveryPerson(DeliveryPerson* pDelPer);
+
 
 #endif // !__DELIVERY_PERSON__

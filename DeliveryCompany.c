@@ -202,3 +202,14 @@ void printDeliveryCompany(DeliveryCompany* pDelComp)
 	printf("Company: %s\tRegion: %s\tDelivery Persons: %d\n", pDelComp->name, regionTypeStr[pDelComp->region], pDelComp->deliveryPersonCount);
 	printDeliveryPersonArrayWithIndex(pDelComp);
 }
+
+void freeDeliveryCompany(DeliveryCompany* pDelComp)
+{
+	free(pDelComp->name);
+	for (int i = 0; i < pDelComp->deliveryPersonCount; i++)
+	{
+		freeDeliveryPerson(pDelComp->delPerArray[i]);
+		free(pDelComp->delPerArray[i]);
+	}
+	free(pDelComp->delPerArray);
+}

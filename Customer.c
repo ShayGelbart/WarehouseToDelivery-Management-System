@@ -84,3 +84,8 @@ int writeCustomerToBinaryFile(FILE* fp, Customer* pCustomer)
 		return 0;
 	return 1;
 }
+
+void freeCustomer(Customer* pCustomer)
+{
+	freePerson(&pCustomer->person);
+}

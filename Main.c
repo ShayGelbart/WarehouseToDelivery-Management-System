@@ -64,8 +64,9 @@ int main()
 		}
 	} while (!stop);
 
-	writeStorageToBinaryFile(READ_BIN, &storage);
-	//writeStorageToTextFile(WRITE_TEXT, &storage);
+	writeStorageToBinaryFile(WRITE_BIN, &storage);
+	writeStorageToTextFile(WRITE_TEXT, &storage);
+	freeStorage(&storage);
 }
 
 
