@@ -294,7 +294,7 @@ int writeStorageToBinaryFile(char* fileName, Storage* pStorage)
 		CLOSE_RETURN_ZERO(fp)
 	}
 	for (int i = 0; i < pStorage->numOfManufacturers; i++)
-		if (!writeManufacturerToBinFile(fp, pStorage->manArray[i]))
+		if (!writeManufacturerToBinFile(pStorage->manArray[i], fp))
 		{
 			CLOSE_RETURN_ZERO(fp)
 		}

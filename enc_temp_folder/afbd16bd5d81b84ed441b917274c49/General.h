@@ -3,8 +3,6 @@
 #define __GENERAL__
 
 #define MAX_STR_LEN 255
-#define UPPER_BORDER_ID 9999
-#define LOWER_BORDER_ID 1
 
 #define FREE_RETURN_ZERO(object) {free(object); return 0;}
 #define IF_NULL_RETURN_ZERO(object) {if(!object) {return 0;}}

@@ -46,7 +46,9 @@ int initPersonFromBinaryFile(FILE* fp, Person* pPerson)
     pPerson->name = (char*)malloc(sizeof(char) * len);
     if (!pPerson->name)
         return 0;
-    if (fread(&pPerson->name, sizeof(char), len, fp) != len)
+    if (len >= sizeof(pPerson->name))
+        return 0;
+    if (fread(pPerson->name, sizeof(char), len, fp) != len)
         return 0;
     return 1;
 }
@@ -63,7 +65,7 @@ int writePersonToBinaryFile(FILE* fp, Person* pPerson)
     int len = (int)strlen(pPerson->name) + 1;
     if (fwrite(&len, sizeof(int), 1, fp) != 1)
         return 0;
-    if (fwrite(&pPerson->name, sizeof(char), len, fp) != len)
+    if (fwrite(pPerson->name, sizeof(char), len, fp) != len)
         return 0;
     return 1;
 }

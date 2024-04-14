@@ -31,17 +31,18 @@ int initProductFromBinaryFile(FILE* fp, Product* pProduct)
 	int lenName, temp;
 	if(!readManufacturerFromBinFile(&pProduct->manufacturer, fp))
 		return 0;
-	if (fread(&temp, sizeof(int), 1, fp) != 1)
-		return 0;
-	pProduct->productType = (eProductType)temp;
-	
+	//if (fread(&temp, sizeof(int), 1, fp) != 1)
+	//	return 0;
+	//pProduct->productType = (eProductType)temp;
+	pProduct->productType = pProduct->manufacturer.type;
+
 	if (fread(&lenName, sizeof(int), 1, fp) != 1)
 		return 0;
-	pProduct->nameOfProduct = (char*)malloc(sizeof(char) * MAX_STR_LEN);
+	pProduct->nameOfProduct = (char*)malloc(sizeof(char) * lenName);
 	IF_NULL_RETURN_ZERO(pProduct->nameOfProduct)
-	if (fread(pProduct->nameOfProduct, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
+	if (fread(pProduct->nameOfProduct, sizeof(char), lenName, fp) != lenName)
 		return 0;
-	pProduct->nameOfProduct[lenName - 1] = '\0';
+	pProduct->nameOfProduct[lenName] = '\0';
 	return 1;
 }
 
@@ -58,10 +59,10 @@ int writeProductToBinaryFile(FILE* fp, Product* pProduct)
 	int lenName = (int)strlen(pProduct->nameOfProduct);
 	if(!writeManufacturerToBinFile(&pProduct->manufacturer, fp))
 		return 0;
-	if (fwrite(&pProduct->productType, sizeof(eProductType), 1, fp) != 1)
-		return 0;
+	//if (fwrite(&pProduct->productType, sizeof(eProductType), 1, fp) != 1)
+	//	return 0;
 	
-	if (fwrite(&lenName, sizeof(char), 1, fp) != 1)
+	if (fwrite(&lenName, sizeof(int), 1, fp) != 1)
 		return 0;
 	if (fwrite(pProduct->nameOfProduct, sizeof(char), lenName, fp) != lenName)
 		return 0;

@@ -60,11 +60,12 @@ int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp)
 
 int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp)
 {
-	int len, temp;
+	int len = 0, temp;
 	if (fread(&len, sizeof(int), 1, fp) != 1)
 		return 0;
-
-	if (fread(&pMan->name, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
+	if (len >= sizeof(pMan->name))
+		return 0;
+	if (fread(&pMan->name, sizeof(char), len, fp) != len)
 		return 0;
 	pMan->name[len] = '\0';
 

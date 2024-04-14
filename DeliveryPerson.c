@@ -46,6 +46,8 @@ int	initDeliveryPersonFromTextFile(FILE* fp, DeliveryPerson* pDelPer)
 
 int	initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
 {
+	pDelPer->person = (Person*)malloc(sizeof(Person));
+	IF_NULL_RETURN_ZERO(pDelPer->person)
 	if(!initPersonFromBinaryFile(fp, pDelPer->person))
 		return 0;
 	if (fread(&pDelPer->numOfDeliveries, sizeof(int), 1, fp) != 1)
@@ -56,10 +58,10 @@ int	initDeliveryPersonFromBinaryFile(FILE* fp, DeliveryPerson* pDelPer)
 		return 0;
 
 	for (int i = 0; i < pDelPer->numOfDeliveries; i++)
-		if (fread(&pDelPer->ratingArr[i], sizeof(int), 1, fp) != 1)
+		if (fread(&pDelPer->ratingArr[i], sizeof(double), 1, fp) != 1)
 			return 0;
 
-	if (fread(&pDelPer->averageRating, sizeof(int), 1, fp) != 1)
+	if (fread(&pDelPer->averageRating, sizeof(double), 1, fp) != 1)
 		return 0;
 	if (fread(&pDelPer->deliveryTime, sizeof(int), 1, fp) != 1)
 		return 0;

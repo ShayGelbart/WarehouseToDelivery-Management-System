@@ -64,12 +64,17 @@ int initDeliveryCompanyFromTextFile(FILE* fp, DeliveryCompany* pDelComp)
 
 int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 {
-	int lenName, temp;
+	int lenName;
+		//, temp;
 	if(fread(&lenName, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pDelComp->name, sizeof(char), MAX_STR_LEN, fp) != MAX_STR_LEN)
+	if (lenName >= sizeof(pDelComp->name))
 		return 0;
-	pDelComp->name[lenName - 1] = '\0';
+	pDelComp->name = (char*)malloc(sizeof(char) * lenName);
+	IF_NULL_RETURN_ZERO(pDelComp->name)
+	if (fread(pDelComp->name, sizeof(char), lenName, fp) != lenName)
+		return 0;
+	pDelComp->name[lenName] = '\0';
 	if (fread(&pDelComp->deliveryPersonCount, sizeof(int), 1, fp) != 1)
 		return 0;
 
@@ -86,9 +91,9 @@ int initDeliveryCompanyFromBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 			return 0;
 	}
 
-	if (fread(&temp, sizeof(int), 1, fp) != 1)
+	if (fread(&pDelComp->region, sizeof(int), 1, fp) != 1)
 		return 0;
-	pDelComp->region = (eRegionType)temp;
+	//pDelComp->region = (eRegionType)temp;
 	return 1;
 }
 
@@ -107,7 +112,7 @@ int writeDeliveryCompanyToTextFile(FILE* fp, DeliveryCompany* pDelComp)
 int writeDeliveryCompanyToBinaryFile(FILE* fp, DeliveryCompany* pDelComp)
 {
 	int lenName = (int)strlen(pDelComp->name);
-	if (fwrite(&lenName, sizeof(char), 1, fp) != 1)
+	if (fwrite(&lenName, sizeof(int), 1, fp) != 1)
 		return 0;
 	if (fwrite(pDelComp->name, sizeof(char), lenName, fp) != lenName)
 		return 0;

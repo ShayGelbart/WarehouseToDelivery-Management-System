@@ -113,13 +113,21 @@ int writeDeliveryToTextFile(FILE* fp, Delivery* pDel)
 
 int readDeliveryFromBinaryFile(FILE* fp, Delivery* pDel)
 {
+	pDel->customer = (Customer*)malloc(sizeof(Customer));
+	IF_NULL_RETURN_ZERO(pDel->customer)
+	pDel->products = (LIST*)malloc(sizeof(LIST));
+	IF_NULL_RETURN_ZERO(pDel->products)
+	pDel->deliveryCompany = (DeliveryCompany*)malloc(sizeof(DeliveryCompany));
+	IF_NULL_RETURN_ZERO(pDel->deliveryCompany)
+	L_init(pDel->products);
+	pDel->deliveryPerson = (DeliveryPerson*)malloc(sizeof(DeliveryPerson));
+	IF_NULL_RETURN_ZERO(pDel->deliveryPerson)
 	if (!initCustomerFromBinaryFile(fp, pDel->customer))
 		return 0;
 	if (fread(&pDel->numberOfProducts, sizeof(int), 1, fp) != 1)
 		return 0;
 	for (int i = 0; i < pDel->numberOfProducts; i++)
 	{
-
 		Product* p1 = (Product*)malloc(sizeof(Product));
 		if (!p1)
 			return 0;
