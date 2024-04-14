@@ -61,35 +61,60 @@ int  writeManufacturerToTextFile(Manufacturer* pMan, FILE* fp)
 int  readManufacturerFromBinFile(Manufacturer* pMan, FILE* fp)
 {
 	int len = 0, temp;
-	if (fread(&len, sizeof(int), 1, fp) != 1)
+	/*if (fread(&len, sizeof(int), 1, fp) != 1)
+		return 0;*/
+
+	BYTE data[3];
+	if (fread(&data, sizeof(BYTE), 3, fp) != 3)
 		return 0;
+
+	len = (data[0] & 0xFF);
+	pMan->id = (((data[1] & 0xFF) << 2) | ((data[2] & 0xC0) >> 6));
+	pMan->type = ((data[2] & 0x38) >> 3);
+
 	if (len >= sizeof(pMan->name))
 		return 0;
-	if (fread(&pMan->name, sizeof(char), len, fp) != len)
-		return 0;
-	pMan->name[len] = '\0';
+	
 
-	if (fread(&pMan->id, sizeof(int), 1, fp) != 1)
+	/*if (fread(&pMan->id, sizeof(int), 1, fp) != 1)
 		return 0;
 
 	if (fread(&temp, sizeof(int), 1, fp) != 1)
 		return 0;
-	pMan->type = (eProductType)temp;
+	pMan->type = (eProductType)temp;*/
+	
+	if (fread(&pMan->name, sizeof(char), len, fp) != len)
+		return 0;
+	pMan->name[len] = '\0';
 	return 1;
 }
 
 int  writeManufacturerToBinFile(Manufacturer* pMan, FILE* fp)
 {
+	BYTE data[3] = { 0 };
+
 	int len = (int)strlen(pMan->name) + 1;
-	if (fwrite(&len, sizeof(int), 1, fp) != 1)
+
+	data[0] = len & createMask(8, 0);
+	data[1] = (pMan->id & 0x3FC) >> 2; // 111111100
+	data[2] = ((pMan->id & 0x3) << 6) | ((pMan->type & 0x7) << 3); // 11010000
+
+	if (fwrite(&data, sizeof(BYTE), 3, fp) != 3)
 		return 0;
+
+	/*if (fwrite(&len, sizeof(int), 1, fp) != 1)
+		return 0;*/
 	if (fwrite(&pMan->name, sizeof(char), len, fp) != len)
 		return 0;
-	if (fwrite(&pMan->id, sizeof(int), 1, fp) != 1)
+	/*if (fwrite(&pMan->id, sizeof(int), 1, fp) != 1)
 		return 0;
 	if (fwrite(&pMan->type, sizeof(eProductType), 1, fp) != 1)
-		return 0;
+		return 0;*/
 	return 1;
+}
+
+BYTE createMask(int high, int low) {
+	return (1 << (high + 1)) - (1 << low);
 }
 
 int findManufacturerById(int id, Manufacturer** manArray, int numOfManufacturers)

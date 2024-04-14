@@ -78,6 +78,8 @@ int initAddressFromBinaryFile(FILE* fp, Address* pAddress)
 	if (fread(pAddress->street, sizeof(char), lenStreet, fp) != lenStreet)
 		return 0;
 	pAddress->street[lenStreet] = '\0';
+	if (fread(&pAddress->houseNumber, sizeof(int), 1, fp) != 1)
+		return 0;
 	return 1;
 }
 
@@ -98,6 +100,8 @@ int writeAddressToBinaryFile(FILE* fp, Address* pAddress)
 	if (fwrite(&lenStreet, sizeof(int), 1, fp) != 1)
 		return 0;
 	if (fwrite(pAddress->street, sizeof(char), lenStreet, fp) != lenStreet)
+		return 0;
+	if (fwrite(&pAddress->houseNumber, sizeof(int), 1, fp) != 1)
 		return 0;
 	return 1;
 }

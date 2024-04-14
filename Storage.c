@@ -569,7 +569,6 @@ void returnRating(Storage* pStorage)
 	
 	if (!changeRating(pStorage->deliveryArr[deliveryIndex - 1]->deliveryPerson, rating))
 		printf("Couldn't change rating. Try again\n");
-
 	printf("Successfully added your rating\n");
 }
 
@@ -583,9 +582,9 @@ void editProductsOfDelivery(Storage* pStorage)
 	} while (deliveryIndex < 1 || deliveryIndex > pStorage->numOfDeliveries);
 	
 	do {
-	printf("Would you like to:\n1.Add a new product\n2.Remove a product\n3.Replace a product with a new product\n");
+	printf("Would you like to:\n1.Add a new product\n2.Remove a product\n3.Replace a product with a new product\n4.Change Delivery date\n");
 	scanf("%d", &choice);
-	} while (choice < 1 || choice > 3);
+	} while (choice < 1 || choice > 4);
 
 	if (choice == 1)
 	{
@@ -601,7 +600,7 @@ void editProductsOfDelivery(Storage* pStorage)
 		else
 			printf("Successfully removed product\n");
 	}
-	else
+	else if(choice == 3)
 	{
 		if (!removeProductFromDelivery(pStorage, deliveryIndex))
 			printf("Failed to remove product\n");
@@ -612,6 +611,10 @@ void editProductsOfDelivery(Storage* pStorage)
 			printf("Failed to add product\n");
 		else
 			printf("Successfully added product\n");
+	}
+	else 
+	{
+		changeDeliveryDate(pStorage->deliveryArr[deliveryIndex - 1]);
 	}
 }
 
