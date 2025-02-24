@@ -1,4 +1,8 @@
 # Warehouse and Delivery Management System
+## Submitters
+-Shay Gelbart 
+
+-Arina Kuprina
 
 ## Introduction
 
